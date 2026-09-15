@@ -765,14 +765,6 @@ button { font-family: inherit; }
 
 .pp-seg .is-on { background: #fff; color: var(--ink-800); font-weight: 600; }
 
-.pp-index {
-  margin-top: 2px;
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-}
-
-.pp-index:hover { color: #fff; text-decoration: underline; }
-
 .proto-panel[hidden] { display: none; }
 
 /* ---------- Responsive ---------- */
