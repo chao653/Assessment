@@ -386,7 +386,8 @@
 
     var hash = location.hash || '#intro/' + state.content;
     var versions = ['b', 'c', 'd'].map(function (v) {
-      return { value: v, label: 'Ver. ' + v.toUpperCase(), href: v + '.html' + hash };
+      var page = v === 'b' ? 'index.html' : v + '.html';
+      return { value: v, label: 'Ver. ' + v.toUpperCase(), href: page + hash };
     });
     var contents = [
       { value: 'empty', label: 'Empty' },
@@ -401,8 +402,7 @@
       '<div class="pp-head"><span>Prototype controls</span><button type="button" class="pp-hide" aria-label="Close controls">\u00d7</button></div>' +
       '<div class="pp-row"><span class="pp-label">Layout</span>' + seg(versions, 'href', VERSION) + '</div>' +
       '<div class="pp-row"><span class="pp-label">Intro</span>' + seg(contents, 'data-content', route.screen === 'intro' ? route.content : state.content) + '</div>' +
-      '<div class="pp-row"><span class="pp-label">Screen</span>' + seg(screens, 'data-go', currentScreen) + '</div>' +
-      '<a class="pp-index" href="index.html">\u2190 All proposals</a>';
+      '<div class="pp-row"><span class="pp-label">Screen</span>' + seg(screens, 'data-go', currentScreen) + '</div>';
   }
 
   /* ------------------------------------------------------------------ */
