@@ -109,6 +109,7 @@ window.ACT = (function () {
     arrowUp: (s) => svg('<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>', s),
     arrowDown: (s) => svg('<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>', s),
     check: (s) => svg('<path d="M20 6 9 17l-5-5"/>', s),
+    dot: (s) => svg('<circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/>', s),
     x: (s) => svg('<path d="M18 6 6 18"/><path d="m6 6 12 12"/>', s),
     arrowLeft: (s) => svg('<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>', s),
     arrowRight: (s) => svg('<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>', s),
@@ -181,7 +182,8 @@ window.ACT = (function () {
       if (opts.sort.col !== key) return '<span class="sort-icon">' + ICONS.chevronsUpDown(12) + "</span>";
       return '<span class="sort-icon">' + (opts.sort.dir === "desc" ? ICONS.arrowDown(12) : ICONS.arrowUp(12)) + "</span>";
     };
-    let html = '<div class="table-wrap' + (opts.flat ? " flat" : "") + '"><table class="students"><colgroup><col class="col-student">' + '<col class="col-subject">'.repeat(5) + "</colgroup><thead><tr>";
+    const subjCol = opts.subjectColWidth ? '<col style="width:' + opts.subjectColWidth + 'px">' : '<col class="col-subject">';
+    let html = '<div class="table-wrap' + (opts.flat ? " flat" : "") + '"><table class="students"><colgroup>' + (opts.subjectColWidth ? "<col>" : '<col class="col-student">') + subjCol.repeat(5) + "</colgroup><thead><tr>";
     cols.forEach((c) => {
       const cls = [opts.sort.col === c.key ? "sorted" : "", opts.highlight === c.key ? "highlight" : ""].filter(Boolean).join(" ");
       html += '<th data-col="' + c.key + '" class="' + cls + '"><span class="th-line">' + c.label + sortIcon(c.key) + "</span>" + (c.sub ? '<span class="th-sub">' + c.sub + "</span>" : "") + "</th>";
@@ -197,7 +199,7 @@ window.ACT = (function () {
       const w = s.writing;
       let wcell;
       if (typeof w === "number") wcell = '<span class="pill neutral">' + w + "</span>";
-      else if (w === "pending") wcell = '<span class="pending">Pending</span>';
+      else if (w === "pending") wcell = '<span class="pill pending">Pending</span>';
       else if (s.noScoreReason) wcell = '<span class="cell-tip"><span class="dash">—</span><span class="tip">' + s.noScoreReason + "</span></span>";
       else wcell = '<span class="dash">—</span>';
       html += "<td>" + wcell + "</td></tr>";
@@ -215,7 +217,7 @@ window.ACT = (function () {
 
   function renderLegend(container, opts) {
     container.innerHTML =
-      '<div class="legend">' +
+      '<div class="legend' + (opts && opts.className ? " " + opts.className : "") + '">' +
       '<span class="legend-item"><span class="swatch above"></span>Above benchmark</span>' +
       '<span class="legend-item"><span class="swatch at"></span>At benchmark</span>' +
       '<span class="legend-item"><span class="swatch below"></span>Below benchmark</span>' +
