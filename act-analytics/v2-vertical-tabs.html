@@ -9,68 +9,81 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shared.css">
 <style>
-  /* Prototype B — segmented subject tabs → hero (class average + distribution) → skill rail (master) + students (detail) */
+  /* Prototype B — segmented subject tabs → hero (class average + distribution) → one card: skill rail (master) | students (detail) */
   .seg { display: flex; gap: 4px; padding: 4px; background: var(--surface-subtle); border-radius: var(--r-md); }
   .seg-item {
-    flex: 1; height: 32px; border: 0; border-radius: var(--r-sm); background: transparent; cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit;
-    font-size: 12px; line-height: 16px; color: var(--text-secondary); transition: background 120ms ease, color 120ms ease;
+    flex: 1; height: 36px; border: 0; border-radius: var(--r-sm); background: transparent; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit;
+    font-size: var(--t-sm); line-height: var(--lh-sm); color: var(--text-secondary); transition: background 120ms ease, color 120ms ease;
   }
   .seg-item:hover { color: var(--text-primary); }
   .seg-item .ic { display: inline-flex; color: var(--text-secondary); }
   .seg-item .nm { font-weight: 500; }
+  .seg-item .dot { display: inline-flex; color: var(--text-tertiary); }
   .seg-item .sc { font-weight: 600; color: var(--text-primary); }
-  .seg-item .of { font-size: 11px; color: var(--text-tertiary); }
+  .seg-item .sc.none { color: var(--text-tertiary); font-weight: 400; }
+  .seg-item .of { font-size: var(--t-xxs); line-height: var(--lh-xxs); color: var(--text-tertiary); margin-left: -4px; align-self: flex-end; padding-bottom: 1px; }
   .seg-item.selected { background: var(--surface); box-shadow: var(--shadow-sm), 0 0 0 1px var(--border); }
   .seg-item.selected .nm, .seg-item.selected .ic { color: var(--text-brand); }
 
-  .two-col { display: grid; grid-template-columns: 265px minmax(0, 1fr); gap: 16px; margin-top: 16px; }
-  .hero-left { padding: 16px; }
-  .hero-left .hl-top { display: flex; align-items: center; gap: 10px; }
-  .hero-left .hl-top .nm { font-size: 12px; font-weight: 600; line-height: 16px; }
-  .hero-left .hl-top .sub { font-size: 11px; line-height: 14px; color: var(--text-secondary); }
-  .hero-left .hl-value { display: flex; align-items: baseline; gap: 4px; margin-top: 16px; }
-  .hero-left .hl-value b { font-size: 28px; font-weight: 700; line-height: 32px; letter-spacing: -0.02em; }
+  /* hero: 374px subject card + distribution card */
+  .hero { display: grid; grid-template-columns: 374px minmax(0, 1fr); gap: 16px; margin-top: 16px; }
+  .hero-left { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .hero-left .hl-top { display: flex; align-items: center; gap: 12px; }
+  .hero-left .hl-top .nm { font-size: var(--t-sm); font-weight: 600; line-height: var(--lh-sm); }
+  .hero-left .hl-top .sub { font-size: var(--t-xxs); line-height: var(--lh-xxs); color: var(--text-secondary); }
+  .hero-left .hl-value { display: flex; align-items: baseline; gap: 4px; }
+  .hero-left .hl-value b { font-size: 30px; font-weight: 700; line-height: 36px; letter-spacing: -0.02em; }
   .hero-left .hl-value b.none { color: var(--text-tertiary); font-weight: 400; }
-  .seg-item .sc.none { color: var(--text-tertiary); font-weight: 400; }
-  .hero-left .hl-value span { font-size: 12px; color: var(--text-tertiary); }
-  .hero-left .hl-met { font-size: 12px; font-weight: 500; line-height: 16px; margin-top: 8px; }
-  .hero-left .hl-stats { margin-top: 12px; background: var(--surface-subtle); border-radius: var(--r-md); padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; color: var(--text-secondary); }
+  .hero-left .hl-value span { font-size: var(--t-sm); color: var(--text-tertiary); }
+  .hero-left .hl-met { font-size: var(--t-sm); font-weight: 500; line-height: var(--lh-sm); }
+  .hero-left .hl-stats { background: var(--surface-subtle); border-radius: var(--r-md); padding: 12px; display: flex; flex-direction: column; gap: 6px; color: var(--text-secondary); font-size: var(--t-sm); line-height: var(--lh-sm); }
   .hero-left .hl-stats b { color: var(--text-primary); font-weight: 600; }
   .hero-left .hl-stats b.brand-text { color: var(--text-brand); }
 
   .hero-right { padding: 16px; }
-  .hero-right .hr-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+  .hero-right .hr-title { font-size: var(--t-sm); font-weight: 600; line-height: var(--lh-sm); }
+  .hero-right .hr-meta { display: flex; align-items: center; justify-content: space-between; margin: 12px 0 12px; }
 
-  .rail { padding: 16px; display: flex; flex-direction: column; }
-  .rail .rail-sub { font-size: 11px; line-height: 14px; color: var(--text-secondary); margin-top: 2px; }
-  .skill-tabs { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
-  .skill-group { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); padding: 8px 12px 2px; }
+  /* skill gaps & students — one card */
+  .gaps { margin-top: 16px; padding: 16px; display: flex; gap: 24px; align-items: stretch; }
+  .rail { width: 340px; flex: 0 0 340px; display: flex; flex-direction: column; gap: 4px; }
+  .rail-header { padding-bottom: 8px; display: flex; flex-direction: column; gap: 4px; }
+  .rail-header .rail-sub { font-size: var(--t-sm); line-height: var(--lh-sm); color: var(--text-secondary); display: inline-flex; align-items: center; gap: 4px; }
+  .skill-tabs { display: flex; flex-direction: column; gap: 8px; }
+  .skill-group { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); padding: 8px 16px 0; }
   .skill-tab {
-    text-align: left; width: 100%; padding: 10px 12px; border-radius: var(--r-md); border: 1px solid transparent; background: transparent;
-    cursor: pointer; font-family: inherit; color: inherit; transition: border-color 120ms ease, background 120ms ease;
+    text-align: left; width: 100%; padding: 12px 16px; border-radius: var(--r-md); border: 1px solid transparent; background: transparent;
+    cursor: pointer; font-family: inherit; color: inherit; display: flex; flex-direction: column; gap: 4px;
+    transition: border-color 120ms ease, background 120ms ease;
   }
   .skill-tab:hover { background: var(--surface-hover); }
   .skill-tab.selected { border-color: var(--brand); background: var(--surface); }
-  .skill-tab .st-name { font-size: 12px; font-weight: 500; line-height: 16px; }
+  .skill-tab .st-name { font-size: var(--t-sm); font-weight: 500; line-height: var(--lh-sm); }
   .skill-tab.selected .st-name { color: var(--text-brand); }
-  .skill-tab .st-meta { font-size: 11px; line-height: 14px; color: var(--text-secondary); margin-top: 4px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .skill-tab .st-meta { font-size: var(--t-xxs); line-height: var(--lh-xxs); color: var(--text-secondary); display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
   .skill-tab .st-meta b { font-weight: 600; color: var(--text-primary); }
   .skill-tab .st-meta b.warn { color: var(--warning); }
   .skill-tab.selected .st-meta b.count { color: var(--text-brand); }
+  .skill-tab .st-meta .dot { display: inline-flex; color: var(--text-tertiary); align-self: center; }
   .skill-tab.disabled { cursor: default; opacity: 0.6; }
-  .rail-foot { margin-top: auto; padding-top: 16px; display: flex; justify-content: center; }
-
-  .detail { padding: 16px; min-width: 0; }
-  .detail .dt-head { margin-bottom: 12px; }
-  .detail .dt-desc { color: var(--text-secondary); margin-top: 2px; }
-  .detail .dt-desc b { color: var(--text-primary); font-weight: 600; }
-  .detail .dt-legend { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--separator); }
-  .detail-empty { min-height: 320px; display: flex; align-items: center; justify-content: center; }
+  .rail-foot { margin-top: auto; padding: 8px 16px 0; display: flex; justify-content: center; }
+  .see-all-btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 8px 12px; border-radius: var(--r-full); border: 0;
+    background: transparent; color: var(--text-primary); font-size: var(--t-sm); font-weight: 500; line-height: var(--lh-sm); cursor: pointer; font-family: inherit;
+  }
+  .see-all-btn:hover { background: var(--surface-subtle); }
+  .gaps-sep { width: 1px; flex: 0 0 1px; background: var(--border); align-self: stretch; }
+  .pane { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+  .pane-header { display: flex; flex-direction: column; gap: 4px; }
+  .pane-header .pane-sub { font-size: var(--t-sm); line-height: var(--lh-sm); color: var(--text-secondary); }
+  .pane-header .pane-sub b { color: var(--text-primary); font-weight: 600; }
+  .pane-legend { border-top: 1px solid var(--border); padding-top: 12px; margin-top: auto; }
+  .pane-empty { min-height: 300px; display: flex; align-items: center; justify-content: center; }
 
   /* loading / error */
-  .skel-seg { height: 40px; }
-  .skel-card { border: 1px solid var(--border); border-radius: var(--r-md); padding: 16px; }
+  .skel-seg { height: 44px; }
+  .skel-card { border: 1px solid var(--border); border-radius: var(--r-lg); padding: 16px; }
   .state-card { min-height: 320px; display: flex; align-items: center; justify-content: center; }
 </style>
 </head>
@@ -106,7 +119,6 @@
 
   // In the "Subject not scored" state, Science has no scores yet
   const students = () => state.mode === "science-empty" ? A.STUDENTS.map((s) => Object.assign({}, s, { science: null })) : A.STUDENTS;
-  const subjectScored = (key) => A.subjectStats(key, students()).n > 0;
 
   function setMode(mode) {
     state.mode = mode;
@@ -122,7 +134,7 @@
     label: "Prototype B",
     states: STATES,
     current: state.mode,
-    links: [{ href: "v1-single-column.html", label: "← Prototype A" }, { href: "index.html", label: "Index" }],
+    links: [{ href: "./", label: "← Prototype A" }],
     onChange: setMode,
   });
 
@@ -131,7 +143,7 @@
     return '<div class="seg" role="tablist">' + A.SUBJECTS.map((s) => {
       const st = A.subjectStats(s.key, students());
       return '<button class="seg-item' + (state.subject === s.key ? " selected" : "") + '" role="tab" data-subject="' + s.key + '">' +
-        '<span class="ic">' + I[s.icon](14) + '</span><span class="nm">' + s.name + '</span><span class="dot-sep">·</span><span class="sc' + (st.n ? "" : " none") + '">' + st.avgText + '</span><span class="of">/ 36</span></button>';
+        '<span class="ic">' + I[s.icon](16) + '</span><span class="nm">' + s.name + '</span><span class="dot">' + I.dot(16) + '</span><span class="sc' + (st.n ? "" : " none") + '">' + st.avgText + '</span><span class="of">/ 36</span></button>';
     }).join("") + "</div>";
   }
 
@@ -140,7 +152,7 @@
     const st = A.subjectStats(s.key, students());
     const scored = st.n > 0;
     const left = '<div class="card hero-left">' +
-      '<div class="hl-top"><div class="subject-tile">' + I[s.icon](18) + '</div><div><div class="nm">' + s.name + '</div><div class="sub">Class average</div></div></div>' +
+      '<div class="hl-top"><div class="subject-tile">' + I[s.icon](20) + '</div><div><div class="nm">' + s.name + '</div><div class="sub">Class average</div></div></div>' +
       '<div class="hl-value"><b' + (scored ? "" : ' class="none"') + ">" + st.avgText + "</b><span>/ 36</span></div>" +
       (scored
         ? '<div class="hl-met">' + st.met + " of " + st.n + " met BM " + s.bm + "</div>" +
@@ -149,23 +161,24 @@
           '<div class="hl-stats"><span>Class average and benchmark comparison appear once ' + s.name + " is graded.</span></div>") +
       "</div>";
     const right = '<div class="card hero-right">' +
-      '<div class="hr-head"><div><div class="h-md">Score distribution</div><div class="muted" style="margin-top:2px">' + (scored ? st.n + " students scored · BM " + s.bm : "BM " + s.bm) + "</div></div>" +
-      (scored ? '<div class="legend"><span class="legend-item"><span class="swatch above"></span>Above BM</span><span class="legend-item"><span class="swatch bm"></span>Includes BM</span><span class="legend-item"><span class="swatch gray"></span>Below BM</span></div>' : "") +
+      '<div class="hr-title">Score distribution</div>' +
+      '<div class="hr-meta"><span class="muted">' + (scored ? st.n + " students scored · BM " + s.bm : "BM " + s.bm) + "</span>" +
+      (scored ? '<div class="legend compact"><span class="legend-item"><span class="swatch above"></span>Above BM</span><span class="legend-item"><span class="swatch bm"></span>Includes BM</span><span class="legend-item"><span class="swatch gray"></span>Below BM</span></div>' : "") +
       "</div>" +
       (scored ? '<div id="histogram"></div>' : A.emptyState({ mascot: "shy", compact: true, title: "No " + s.name + " scores yet", desc: "The distribution appears once " + s.name + " responses are scored." })) +
       "</div>";
-    return '<div class="two-col">' + left + right + "</div>";
+    return '<div class="hero">' + left + right + "</div>";
   }
 
   function skillTab(sk) {
     const st = A.subjectStats(sk.subject, students());
     const sel = state.skillId === sk.id;
     if (st.n === 0) {
-      return '<button class="skill-tab disabled" disabled><div class="st-name">' + sk.name + '</div><div class="st-meta"><span>— class accuracy</span><span class="dot-sep">·</span><span>— weak</span></div></button>';
+      return '<button class="skill-tab disabled" disabled><div class="st-name">' + sk.name + '</div><div class="st-meta"><span>— class accuracy</span><span class="dot">' + I.dot(16) + '</span><span>— weak</span></div></button>';
     }
     return '<button class="skill-tab' + (sel ? " selected" : "") + '" data-skill="' + sk.id + '" role="tab" aria-selected="' + sel + '">' +
       '<div class="st-name">' + sk.name + "</div>" +
-      '<div class="st-meta"><span><b class="' + (sk.accuracy < 70 ? "warn" : "") + '">' + sk.accuracy + '%</b> class accuracy</span><span class="dot-sep">·</span><span><b class="count">' + sk.weak.length + "</b> of " + st.n + " weak</span></div></button>";
+      '<div class="st-meta"><b class="' + (sk.accuracy < 70 ? "warn" : "") + '">' + sk.accuracy + '%</b><span>class accuracy</span><span class="dot">' + I.dot(16) + '</span><b class="count">' + sk.weak.length + "</b><span>of " + st.n + " weak</span></div></button>";
   }
 
   function rail() {
@@ -173,25 +186,25 @@
     let tabs;
     if (state.seeAll) tabs = A.SUBJECTS.map((sub) => '<div class="skill-group">' + sub.name + "</div>" + A.SKILLS.filter((k) => k.subject === sub.key).map(skillTab).join("")).join("");
     else tabs = A.SKILLS.filter((k) => k.subject === s.key).map(skillTab).join("");
-    return '<div class="card rail"><div><div class="h-md">Skill gaps · ' + s.name + '</div><div class="rail-sub">Pick a skill ' + I.arrowRight(11) + " its students show on the right</div></div>" +
+    return '<div class="rail"><div class="rail-header"><div class="h-base">Skill gaps · ' + s.name + '</div><div class="rail-sub">Pick a skill ' + I.arrowRight(14) + " its students show on the right</div></div>" +
       '<div class="skill-tabs" role="tablist">' + tabs + "</div>" +
-      '<div class="rail-foot"><button class="link-btn" id="see-all">' + (state.seeAll ? "Show less " + I.chevronUp(14) : "See all " + A.TOTAL_SKILLS + " " + I.chevronDown(14)) + "</button></div></div>";
+      '<div class="rail-foot"><button class="see-all-btn" id="see-all">' + (state.seeAll ? "Show less " + I.chevronUp(16) : "See all " + A.TOTAL_SKILLS + " " + I.chevronDown(16)) + "</button></div></div>";
   }
 
-  function detail() {
+  function pane() {
     const s = A.subject(state.subject);
     const st = A.subjectStats(s.key, students());
     const sel = state.skillId ? A.skill(state.skillId) : null;
     let head;
-    if (st.n === 0) head = '<div class="dt-head"><div class="h-md">Students in this gap</div><div class="dt-desc">' + s.name + " · no scores yet</div></div>";
-    else if (sel) head = '<div class="dt-head"><div class="h-md">Students in this gap</div><div class="dt-desc">' + s.name + " · <b>" + sel.weak.length + "</b> of " + st.n + " students with " + A.withArticle(s.name) + " score are below the 70% line · click a column to sort</div></div>";
-    else head = '<div class="dt-head"><div class="h-md">All students</div><div class="dt-desc"><b>' + A.STUDENTS.length + "</b> students · " + s.name + " column highlighted · click a column to sort</div></div>";
-    return '<div class="card detail">' + head + '<div id="table"></div><div id="legend" class="dt-legend"></div></div>';
+    if (st.n === 0) head = '<div class="pane-header"><div class="h-base">Students in this gap</div><div class="pane-sub">' + s.name + " · no scores yet</div></div>";
+    else if (sel) head = '<div class="pane-header"><div class="h-base">Students in this gap</div><div class="pane-sub">' + s.name + " · <b>" + sel.weak.length + "</b> of " + st.n + " students with " + A.withArticle(s.name) + " score are below the 70% line · click a column to sort</div></div>";
+    else head = '<div class="pane-header"><div class="h-base">All students</div><div class="pane-sub"><b>' + A.STUDENTS.length + "</b> students · " + s.name + " column highlighted · click a column to sort</div></div>";
+    return '<div class="pane">' + head + '<div id="table"></div><div id="legend" class="pane-legend"></div></div>';
   }
 
   function renderDefault() {
     subtitle.textContent = A.SUMMARY;
-    root.innerHTML = segmented() + hero() + '<div class="two-col">' + rail() + detail() + "</div>";
+    root.innerHTML = segmented() + hero() + '<div class="card gaps">' + rail() + '<div class="gaps-sep"></div>' + pane() + "</div>";
 
     root.querySelectorAll(".seg-item").forEach((b) => b.addEventListener("click", () => {
       const key = b.dataset.subject;
@@ -202,7 +215,7 @@
       render();
     }));
     const hist = root.querySelector("#histogram");
-    if (hist) A.renderHistogram(hist, { subject: state.subject, students: students(), maxBar: 64 });
+    if (hist) A.renderHistogram(hist, { subject: state.subject, students: students(), maxBar: 96 });
 
     root.querySelector("#see-all").addEventListener("click", () => { state.seeAll = !state.seeAll; render(); });
     root.querySelectorAll(".skill-tab[data-skill]").forEach((b) => b.addEventListener("click", () => {
@@ -219,12 +232,12 @@
     const sel = state.skillId ? A.skill(state.skillId) : null;
 
     if (st.n === 0) {
-      tableEl.innerHTML = '<div class="detail-empty">' + A.emptyState({ mascot: "thankful", compact: true, title: "No students to show yet", desc: "Students appear here once " + s.name + " responses are scored." }) + "</div>";
+      tableEl.innerHTML = '<div class="pane-empty">' + A.emptyState({ mascot: "thankful", compact: true, title: "No students to show yet", desc: "Students appear here once " + s.name + " responses are scored." }) + "</div>";
       legendEl.remove();
       return;
     }
     if (sel && sel.weak.length === 0) {
-      tableEl.innerHTML = '<div class="detail-empty">' + A.emptyState({ mascot: "cheering", compact: true, title: "No students below the line", desc: "Everyone with " + A.withArticle(s.name) + " score is at or above 70% on " + sel.name + "." }) + "</div>";
+      tableEl.innerHTML = '<div class="pane-empty">' + A.emptyState({ mascot: "cheering", compact: true, title: "No students below the line", desc: "Everyone with " + A.withArticle(s.name) + " score is at or above 70% on " + sel.name + "." }) + "</div>";
       legendEl.remove();
       return;
     }
@@ -233,6 +246,7 @@
       sort: state.sort,
       highlight: s.key,
       flat: true,
+      subjectColWidth: 120,
       onSort: (srt) => { state.sort = srt; render(); },
     });
     A.renderLegend(legendEl);
@@ -241,11 +255,11 @@
   function renderLoading() {
     subtitle.textContent = A.SUMMARY;
     root.innerHTML = '<div class="skel skel-seg"></div>' +
-      '<div class="two-col"><div class="skel-card"><div class="skel" style="width:36px;height:36px"></div><div class="skel" style="width:90px;height:28px;margin-top:16px"></div><div class="skel" style="width:140px;height:12px;margin-top:10px"></div><div class="skel" style="height:72px;margin-top:12px"></div></div>' +
-      '<div class="skel-card"><div class="skel" style="width:140px;height:14px"></div><div class="skel" style="width:180px;height:10px;margin-top:8px"></div><div style="display:flex;gap:8px;align-items:flex-end;height:96px;margin-top:20px">' +
-      [10, 10, 30, 48, 64, 40, 22, 10].map((h) => '<div class="skel" style="flex:1;height:' + h + 'px"></div>').join("") + "</div></div></div>" +
-      '<div class="two-col"><div class="skel-card"><div class="skel" style="width:150px;height:14px"></div><div class="skel" style="width:200px;height:10px;margin-top:8px"></div>' + '<div class="skel" style="height:48px;margin-top:12px"></div>'.repeat(3) + "</div>" +
-      '<div class="skel-card"><div class="skel" style="width:140px;height:14px"></div><div class="skel" style="width:320px;height:10px;margin-top:8px"></div><div class="skel" style="height:40px;margin-top:16px"></div>' + '<div class="skel" style="height:28px;margin-top:8px"></div>'.repeat(5) + "</div></div>";
+      '<div class="hero"><div class="skel-card"><div class="skel" style="width:36px;height:36px"></div><div class="skel" style="width:90px;height:32px;margin-top:16px"></div><div class="skel" style="width:140px;height:14px;margin-top:12px"></div><div class="skel" style="height:96px;margin-top:12px"></div></div>' +
+      '<div class="skel-card"><div class="skel" style="width:140px;height:14px"></div><div class="skel" style="width:180px;height:12px;margin-top:12px"></div><div style="display:flex;gap:8px;align-items:flex-end;height:120px;margin-top:24px">' +
+      [10, 10, 30, 56, 80, 48, 26, 10].map((h) => '<div class="skel" style="flex:1;height:' + h + 'px"></div>').join("") + "</div></div></div>" +
+      '<div class="card gaps"><div class="rail"><div class="skel" style="width:150px;height:16px"></div><div class="skel" style="width:240px;height:12px;margin-top:8px"></div>' + '<div class="skel" style="height:70px;margin-top:12px"></div>'.repeat(3) + "</div>" +
+      '<div class="gaps-sep"></div><div class="pane"><div class="skel" style="width:160px;height:16px"></div><div class="skel" style="width:420px;height:12px;margin-top:8px"></div><div class="skel" style="height:44px;margin-top:12px"></div>' + '<div class="skel" style="height:29px;margin-top:8px"></div>'.repeat(5) + "</div></div>";
   }
 
   function renderFailed() {
