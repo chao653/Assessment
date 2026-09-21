@@ -10,21 +10,25 @@
 <link rel="stylesheet" href="shared.css">
 <style>
   /* Prototype B — segmented subject tabs → hero (class average + distribution) → one card: skill rail (master) | students (detail) */
+  /* Subject Tabs (Figma 11102:46733): #f5f5f5 track, p4 gap4 r8 · tabs px12 py8 gap8 r6 · selected = white + shadow/sm */
   .seg { display: flex; gap: 4px; padding: 4px; background: var(--surface-subtle); border-radius: var(--r-md); }
   .seg-item {
-    flex: 1; height: 36px; border: 0; border-radius: var(--r-sm); background: transparent; cursor: pointer;
+    flex: 1 0 0; min-width: 0; padding: 8px 12px; border: 0; border-radius: 6px; background: transparent; cursor: pointer;
     display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit;
-    font-size: var(--t-sm); line-height: var(--lh-sm); color: var(--text-secondary); transition: background 120ms ease, color 120ms ease;
+    font-size: var(--t-sm); line-height: var(--lh-sm); color: var(--text-secondary); white-space: nowrap;
+    transition: background 120ms ease, color 120ms ease;
   }
-  .seg-item:hover { color: var(--text-primary); }
+  .seg-item:hover:not(.selected) { background: rgba(255, 255, 255, 0.6); }
   .seg-item .ic { display: inline-flex; color: var(--text-secondary); }
-  .seg-item .nm { font-weight: 500; }
-  .seg-item .dot { display: inline-flex; color: var(--text-tertiary); }
-  .seg-item .sc { font-weight: 600; color: var(--text-primary); }
-  .seg-item .sc.none { color: var(--text-tertiary); font-weight: 400; }
-  .seg-item .of { font-size: var(--t-xxs); line-height: var(--lh-xxs); color: var(--text-tertiary); margin-left: -4px; align-self: flex-end; padding-bottom: 1px; }
-  .seg-item.selected { background: var(--surface); box-shadow: var(--shadow-sm), 0 0 0 1px var(--border); }
+  .seg-item .nm { font-weight: 500; color: var(--text-secondary); }
+  .seg-item .dot { display: inline-flex; color: var(--text-secondary); }
+  .seg-item .score { display: inline-flex; align-items: baseline; gap: 4px; color: var(--text-secondary); }
+  .seg-item .score .sc { font-weight: 600; font-size: var(--t-sm); line-height: var(--lh-sm); }
+  .seg-item .score .sc.none { font-weight: 400; color: var(--text-tertiary); }
+  .seg-item .score .of { font-size: var(--t-xxs); line-height: var(--lh-xxs); font-weight: 400; color: var(--text-secondary); }
+  .seg-item.selected { background: var(--surface); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
   .seg-item.selected .nm, .seg-item.selected .ic { color: var(--text-brand); }
+  .seg-item.selected .score .sc { color: var(--text-primary); }
 
   /* hero: 374px subject card + distribution card */
   .hero { display: grid; grid-template-columns: 374px minmax(0, 1fr); gap: 16px; margin-top: 16px; }
@@ -143,7 +147,8 @@
     return '<div class="seg" role="tablist">' + A.SUBJECTS.map((s) => {
       const st = A.subjectStats(s.key, students());
       return '<button class="seg-item' + (state.subject === s.key ? " selected" : "") + '" role="tab" data-subject="' + s.key + '">' +
-        '<span class="ic">' + I[s.icon](16) + '</span><span class="nm">' + s.name + '</span><span class="dot">' + I.dot(16) + '</span><span class="sc' + (st.n ? "" : " none") + '">' + st.avgText + '</span><span class="of">/ 36</span></button>';
+        '<span class="ic">' + I[s.icon](16) + '</span><span class="nm">' + s.name + '</span><span class="dot">' + I.dot(16) + '</span>' +
+        '<span class="score"><span class="sc' + (st.n ? "" : " none") + '">' + st.avgText + '</span><span class="of">/ 36</span></span></button>';
     }).join("") + "</div>";
   }
 
