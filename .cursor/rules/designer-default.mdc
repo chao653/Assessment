@@ -1,0 +1,7 @@
+---
+description: Default designer for everything created in this repo
+alwaysApply: true
+---
+
+- Default Designer is Chao (Zhang Chao, chao@kira-learning.com). Use it for every new design deliverable in this repo: Figma requirement cards (`Documentation Helper / Card`), Figma operation logs, Linear comment drafts, and PR descriptions. No confirmation needed; use someone else only if the user names them.
+- Leave the Designer on existing cards that belong to other projects or people as it is.
