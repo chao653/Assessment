@@ -1,0 +1,71 @@
+# Speak Aloud 学生端 · Figma 操作日志
+
+文件：[Question-Library](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library) › 页面 `Speak Aloud` › Section `Student`（`11501:11438`）
+
+## 2026-10-13 · APACUIX-445 PM Review 学生端第 1–4 条
+
+**任务来源**：[APACUIX-445 PM Review：Speak Aloud 设计稿问题汇总](https://linear.app/kira-learning/issue/APACUIX-445) 学生端（Chao）第 1–4 条，加上 pamper 在评论里补的一条（Speak Aloud 没有 Explanation）。规则对照 [PRD](https://app.notion.com/p/3e270a1b99248169bd37fb0eec960a5e) §4、§5。
+
+**结果状态**：Figma 已改完，待 PM 复核。
+
+### 逐条处理
+
+| # | PM 要求 | 改了什么 | 涉及节点 |
+| --- | --- | --- | --- |
+| 1 | 成绩页不显示 Correct / Incorrect，目标文本不标逐词对错，Your Response 放学生自己的录音，可回听 | 5 张成绩页加 2 张 Submitted Ungraded 页，题卡全部换成新组件 `Speak Aloud / Student Report`：目标文本改成整句显示，不再拆词块、也不标红绿；`Student Response` 改为 `Your Response`；播放器换成老师批改用的同一个（Audio Row · Teacher/Default），能播放，也不按对错染色；各状态的标签和分数按 PM 规则（见下表） | [Full Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50954) · [0 Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17534) · [Insufficient Response](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17545) · [Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556) · [Needs Grading](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17567) · [Ungraded - Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50943) · [Ungraded - Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17523) |
+| 2 | 录音时只留停止按钮，去掉取消 | 录音区隐藏 `Discard Recording`（×），只留下 `Finish Recording`（✓，也就是停止按钮） | [Recording](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14856) |
+| 3 | 麦克风被拦截时回到 Tap to Speak，不用 Try again，这题算未作答 | `Try again` 按钮改为 `Tap to Speak`，图标换成 Microphone；被拦截的提示文案保留 | [Microphone Blocked](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14921) |
+| 4 | 状态标签统一为图标加文字 | 新建 `Student Result Badge` 组件：Correct、Incorrect 不变；Rubric Graded 从蓝字改为灰字（text/secondary），加 Scroll 图标；Not Answered 改为更浅的灰（text/tertiary），加 MinusCircle 图标；新增 Insufficient Response，用琥珀色（text/warning）加 WarningCircle 图标 | [Student Result Badge](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11942-47763) |
+| 补充 | Speak Aloud 没有 Explanation | 所有成绩页去掉 Explanation | 同第 1 条 |
+
+### 各状态最终表现（`Speak Aloud / Student Report` 的 State 变体）
+
+| State | 标签 | 分数 | Your Response | 反馈入口 | 用在哪张画板 |
+| --- | --- | --- | --- | --- | --- |
+| Full Points | Rubric Graded | 1 / 1 pt | 播放器 | Feedback Notes（收起）+ View My Feedback | Graded - Full Points（原 Graded - Correct） |
+| 0 Points | Rubric Graded | 0 / 1 pt | 播放器 | Feedback Notes（收起）+ View My Feedback | Graded - 0 Points（原 Graded - Incorrect） |
+| Insufficient Response | Insufficient Response | 0 / 1 pt | 播放器，下方提示 `No speech was heard in this recording.` | View My Feedback | Graded - Insufficient Response |
+| Not Released | 无 | - / 1 pt（灰底） | 播放器 | 无 | Graded - Needs Grading、Submitted Ungraded - Answered |
+| Not Answered | Not Answered | - / 1 pt | 无播放器，显示 `No recording was saved for this question.` | View My Feedback | Graded - Not Answered |
+| Not Released - Not Answered | 无 | - / 1 pt（灰底） | 无播放器，显示 `No recording was saved for this question.` | 无 | Submitted Ungraded - Not Answered |
+
+### 其他改动
+
+- 新建 Section `Student Components`（[`11942:47686`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11942-47686)），放在 `Student` 正下方，里面是两个本地组件：`Student Result Badge`（[`11942:47763`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11942-47763)）和 `Speak Aloud / Student Report`（[`11944:48842`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11944-48842)）。颜色用 Design System 2.0 Foundations 变量，图标用 Design System 2.0 Icons（Phosphor），文字样式用 `text/lg/regular`、`text/sm/regular`。
+- 画板改名：`Graded - Correct` 改为 `Graded - Full Points`，`Graded - Incorrect` 改为 `Graded - 0 Points`。学生端不再出现对错，原来的名字会误导。
+- 左侧需求卡 `Speak Aloud Student Requirement`（[`11519:14431`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11519-14431)）的描述、Solution、Notes 已按新规则更新：报告里可以回听，不显示对错，麦克风被拦截时回到 Tap to Speak，没有 Explanation。
+
+### 结论分类
+
+**已确认**（Linear / PRD 原文）
+- 第 1–4 条及补充 Explanation 的全部要求，按上表落地。
+
+**设计判断**（PM 没明说，按 PRD 或原型补的）
+- 目标文本标签由 `Expected Text` 改为 `Text for Students to Speak`：PRD §4.1 写学生看到的就是这个名字，PM 原型也这么写。
+- Feedback Notes 只放在满分和 0 分两个状态；Insufficient Response 和 Not Answered 只放 View My Feedback。这是照 PM 原型画的。
+- 停止按钮沿用现有的 ✓（Finish Recording），只去掉 ×，提示文案 `Tap the check when you finish...` 不变。
+- 麦克风被拦截的说明文案保留，只把按钮换成 `Tap to Speak`。
+- 题卡布局沿用当前的单题回顾页（Back + Section），和已上线的 Multiple Choice 成绩页一致，没有改成原型里的 Detailed Results 长列表。
+
+**需用户确认 / 未处理**
+1. **组件库还没同步**。Speak Aloud 相关的母版都在 `Kira Custom Components (TO BE ARCHIVED)` 库里：Questions Answer State、Speak Aloud（Role=Student, Scene=Report / Report-Ungraded）、Audio Row（Role=Student 仍是不可回放）、Recording Area（Recording 态仍有 ×，Mic Blocked 态仍是 Try again）。这次只在本文件里用本地组件和实例覆盖改了，要有库权限的人把改动搬回库里再发布。第 4 条覆盖所有主观题（Free Response、Essay），那些页面得等库里的 Questions Answer State 更新后才会变。
+2. **PM 第④条提到的顶部成绩卡**（Grading in Progress、不显示 Download PDF）属于成绩总览页，这组 Speak Aloud 学生稿里没有这张页面，这次没改。要不要补，请确认。
+3. **答题页右上的 `— / 1 pts`**（单数写成了复数）不在学生端清单里，这次没动。它和其他题型共用考试外壳，要改的话建议一起统一。
+
+### Linear 评论草稿（用户手动回评，不代发）
+
+> 学生端第 1–4 条和补充的 Explanation 已在 Figma 改完：
+>
+> 1. 成绩页：不显示 Correct / Incorrect；目标文本整句显示，不标逐词对错；`Your Response` 换成老师批改用的同一个播放器，可回听，不按对错染色。各状态：满分和 0 分显示 Rubric Graded + 分数，加 Feedback Notes（默认收起）和 View My Feedback；没听到声音显示 Insufficient Response + 0 / 1 pt，播放器下方提示 `No speech was heard in this recording.`；未评完或未发布不显示状态，分数 `- / 1 pt`，不显示反馈入口；未作答显示 Not Answered + `- / 1 pt`，没有播放器。Explanation 全部去掉。
+>    [Full Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50954) · [0 Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17534) · [Insufficient Response](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17545) · [Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556) · [Not Released](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17567)
+> 2. 录音时去掉取消（×），只留停止。[Recording](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14856)
+> 3. 麦克风被拦截时按钮改为 Tap to Speak，不再用 Try again。[Microphone Blocked](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14921)
+> 4. 状态标签统一为图标加文字，新组件 [Student Result Badge](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11942-47763)：Rubric Graded 改为灰字加 Scroll 图标；Not Answered 改为浅灰加 MinusCircle；新增 Insufficient Response（琥珀色加 WarningCircle）。
+>
+> 待确认：① 母版还在 Kira Custom Components (TO BE ARCHIVED) 库里，需要有库权限的人同步并发布，Free Response / Essay 的 Rubric Graded 才会跟着变；② 第④条的顶部成绩卡（Grading in Progress）属于成绩总览页，这组稿里没有，要不要补？③ 答题页 `— / 1 pts` 的复数没改，建议和其他题型一起统一。
+>
+> cc @Xiaoyue
+
+### 参考截图
+
+存在 `参考截图/`，命名为 `2026-10-13-apacuix-445-<before|after>-<画板>.png`。
