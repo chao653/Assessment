@@ -62,6 +62,8 @@
 > 3. 麦克风被拦截时按钮改为 Tap to Speak，不再用 Try again。[Microphone Blocked](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14921)
 > 4. 状态标签统一为图标加文字，新组件 [Student Result Badge](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11942-47763)：Rubric Graded 改为灰字加 Scroll 图标；Not Answered 改为浅灰加 MinusCircle；新增 Insufficient Response（琥珀色加 WarningCircle）。
 >
+> 另外，有鼠标交互的画板都补了 pointer 指针，被指的按钮切成 Hover 态，口径和老师端 Preview 一致。
+>
 > 待确认：① 母版还在 Kira Custom Components (TO BE ARCHIVED) 库里，需要有库权限的人同步并发布，Free Response / Essay 的 Rubric Graded 才会跟着变；② 第④条的顶部成绩卡（Grading in Progress）属于成绩总览页，这组稿里没有，要不要补？③ 答题页 `— / 1 pts` 的复数没改，建议和其他题型一起统一。
 >
 > cc @Xiaoyue
@@ -94,3 +96,28 @@
 | 题号底色未绑 token（从库里的 Report 变体继承来的） | **已补改**：绑到 `fill/neutral/subtle`（#F4F4F5 → #F5F5F5，肉眼无差别）。题号数字是 #18181B，对不上 `text/primary`（#0A0A0A），为了不改外观保持原样 |
 
 **仍待确认**：和上一节「需用户确认 / 未处理」的 3 条相同。
+
+## 2026-10-13 · 鼠标示意
+
+**任务来源**：用户要求「有鼠标交互的，图上都要加鼠标示意」。
+
+**沿用的先例**：老师端 Preview 和批改页的做法——库里的 `Cursor` 组件（`cursor=pointer`），作为画板的最上层子图层，绝对定位，指针中心对准控件中心，图层名 `Cursor / <交互对象>`；被指的按钮切成 `State=Hover`；Section 里在需求卡下方放 `_Annotation / Cursor` 指针图例。
+
+**加指针的口径**：题卡里有可点的控件，就在主要操作上加 pointer；系统处理中、按钮被禁用、或没有可点控件的画板不加。
+
+| 画板 | 指向 | 按钮切 Hover |
+| --- | --- | --- |
+| Not Recorded | Tap to Speak | 是 |
+| Recording | ✓ 停止（Finish Recording） | 是 |
+| Try Again Available | Try again | 是 |
+| Recording Cleared | Tap to Speak | 是 |
+| Microphone Blocked | Tap to Speak | 是 |
+| Save Failed | Record again | 是 |
+| Graded - Full Points / 0 Points / Insufficient Response / Needs Grading、Submitted Ungraded - Answered | 播放按钮 | 播放器没有 Hover 变体，和老师批改页 Play Recording Hover 的做法一样只放指针 |
+| Graded - Not Answered | View My Feedback | 是 |
+
+**不加的画板**：Processing（系统保存中）、Audio Recorded（Allow Try Again 关闭，题卡里没有可点的操作）、Paused - Not Recorded 和 Paused - Audio Recorded（按钮被禁用）、Submitted Ungraded - Not Answered（题卡里没有可点的操作）。
+
+**图例**：从 Teacher Grading 复制 `_Annotation / Cursor` 到 Student Section，放在需求卡下方（[`11972:47597`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11972-47597)）。
+
+**结果状态**：已逐张截图核对，指针都落在对应控件上，Hover 态生效。
