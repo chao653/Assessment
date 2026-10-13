@@ -58,7 +58,7 @@
 >
 > 1. 成绩页：不显示 Correct / Incorrect；目标文本整句显示，不标逐词对错；`Your Response` 换成老师批改用的同一个播放器，可回听，不按对错染色。各状态：满分和 0 分显示 Rubric Graded + 分数，加 Feedback Notes（默认收起）和 View My Feedback；没听到声音显示 Insufficient Response + 0 / 1 pt，播放器下方提示 `No speech was heard in this recording.`；未评完或未发布不显示状态，分数 `- / 1 pt`，不显示反馈入口；未作答显示 Not Answered + `- / 1 pt`，没有播放器。Explanation 全部去掉。
 >    [Full Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50954) · [0 Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17534) · [Insufficient Response](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17545) · [Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556) · [Not Released](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17567)
-> 2. 录音时去掉取消（×），只留停止。[Recording](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14856)
+> 2. 录音时去掉取消（×），只留停止；紧接着的 Processing 态也去掉了置灰的 ×。[Recording](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14856) · [Processing](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14869)
 > 3. 麦克风被拦截时按钮改为 Tap to Speak，不再用 Try again。[Microphone Blocked](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14921)
 > 4. 状态标签统一为图标加文字，新组件 [Student Result Badge](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11942-47763)：Rubric Graded 改为灰字加 Scroll 图标；Not Answered 改为浅灰加 MinusCircle；新增 Insufficient Response（琥珀色加 WarningCircle）。
 >
@@ -69,3 +69,28 @@
 ### 参考截图
 
 存在 `参考截图/`，命名为 `2026-10-13-apacuix-445-<before|after>-<画板>.png`。
+
+## 2026-10-13 · 复核
+
+**任务来源**：用户要求检查学生端是否都已完成。
+
+**Linear 变化**：issue 在 08:15 更新过。学生端第 1–4 条内容不变，只是第 1 条最后一句去掉了「学生端」三个字。老师端新增第 9 条（Monitor 作答抽屉里的 Speak Aloud 题卡要和学生成绩页一致，标题写 `Student Response`），属于 Asher 的范围，这次没动；做的时候可以直接复用 `Speak Aloud / Student Report`。
+
+**逐画板检查结果**（脚本遍历 Student Section 全部 17 张画板）
+
+| 检查项 | 结果 |
+| --- | --- |
+| 7 张成绩页没有 Correct、Incorrect、Explanation、Expected Text、Student Response、词块 | 通过 |
+| 标签和分数：Full Points `Rubric Graded · 1 / 1 pt`；0 Points `Rubric Graded · 0 / 1 pt`；Insufficient `Insufficient Response · 0 / 1 pt`；Not Answered `Not Answered · - / 1 pt`；Needs Grading 和两张 Submitted Ungraded 无标签 `- / 1 pt` | 通过 |
+| 有录音的状态都用 Audio Row · Teacher/Default（可播放，不染色）；未作答用 Student/Empty，文案 `No recording was saved for this question.` | 通过 |
+| Insufficient 播放器下方有 `No speech was heard in this recording.` | 通过 |
+| Feedback Notes 和 View My Feedback 只出现在应出现的状态 | 通过 |
+| 题号全部是 2 | 通过 |
+| Recording：只剩 ✓ | 通过 |
+| Microphone Blocked：按钮是 `Tap to Speak` | 通过 |
+| **Processing：还显示置灰的 ×** | **已补改**：隐藏 `Discard Recording`（[`11521:14869`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14869)），和录音中的控件一致 |
+| Try Again Available 的 `Try again`、Save Failed 的 `Record again` | 保留。这两个是 Allow Try Again 和保存失败重试，和第 3 条无关 |
+| 本地组件没有默认图层名，新建容器的填充都已清空或绑了 token | 通过 |
+| 题号底色未绑 token（从库里的 Report 变体继承来的） | **已补改**：绑到 `fill/neutral/subtle`（#F4F4F5 → #F5F5F5，肉眼无差别）。题号数字是 #18181B，对不上 `text/primary`（#0A0A0A），为了不改外观保持原样 |
+
+**仍待确认**：和上一节「需用户确认 / 未处理」的 3 条相同。
