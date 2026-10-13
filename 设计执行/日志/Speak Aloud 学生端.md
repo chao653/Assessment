@@ -121,3 +121,34 @@
 **图例**：从 Teacher Grading 复制 `_Annotation / Cursor` 到 Student Section，放在需求卡下方（[`11972:47597`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11972-47597)）。
 
 **结果状态**：已逐张截图核对，指针都落在对应控件上，Hover 态生效。
+
+## 2026-10-13 · pamper 评论：去掉 feedback 和 Mark for Review
+
+**任务来源**：[pamper 的评论](https://linear.app/kira-learning/issue/APACUIX-445#comment-343c2c1e)：「speak aloud 题没有 explanation 也没有 feedback；而且这个 Detailed Results（详细结果）页也不应该有 mark for review 按钮」。
+
+**改了什么**
+
+| 改动 | 范围 | 涉及节点 |
+| --- | --- | --- |
+| 去掉分隔线、Feedback Notes 和 View My Feedback | `Speak Aloud / Student Report` 的全部 6 个 State，7 张成绩页跟着组件一起变 | [`11944:48842`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11944-48842) |
+| 去掉底部的 Mark for Review，Prev / Next 改为靠右 | 7 张成绩页：Graded 下 5 张，Submitted Ungraded 下 2 张 | [Full Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50954) 等 |
+| 删掉 `Cursor / View My Feedback` | Graded - Not Answered。按钮没了，题卡里也就没有可点的操作，按鼠标示意的口径不再放指针 | [Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556) |
+| Notes 补一句 `Speak Aloud has no Explanation and no feedback. The results page has no Mark for Review.` | 左侧需求卡 | [`11519:14431`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11519-14431) |
+| 组件描述删掉 Feedback 相关的说明 | `Speak Aloud / Student Report` | 同上 |
+
+**没动的**：10 张答题页的 Mark for Review 保留，PRD §4 写明考试中 Mark for Review 一直显示。
+
+**和之前口径的差异**：PM 原型第①②条画了 Feedback Notes 和 View My Feedback，这次按 pamper 的评论去掉了。上面「各状态最终表现」表里的反馈入口一列已经不适用，现在所有状态都没有反馈入口。
+
+**检查结果**：脚本遍历 17 张画板，成绩页里没有 Mark for Review、Feedback Notes、View My Feedback 和 Explanation；答题页的 Mark for Review 都还在；播放指针位置不变。
+
+### 回复 pamper 的评论草稿（用户手动回评，不代发）
+
+> 已按评论修改：
+>
+> 1. 学生成绩页的 Speak Aloud 去掉了 Feedback Notes 和 View My Feedback（Explanation 之前已经去掉），满分、0 分、Insufficient Response、未作答、未发布的所有状态都没有反馈入口了。
+> 2. 成绩页（Detailed Results）去掉了 Mark for Review，Prev / Next 靠右。答题页的 Mark for Review 保留。
+>
+> [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438) · [Full Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50954) · [Insufficient Response](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17545) · [Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556)
+>
+> cc @pamper @Xiaoyue
