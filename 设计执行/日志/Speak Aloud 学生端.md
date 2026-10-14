@@ -152,3 +152,23 @@
 > [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438) · [Full Points](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50954) · [Insufficient Response](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17545) · [Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556)
 >
 > cc @pamper @Xiaoyue
+
+## 2026-10-14 · 分值统一为 pt
+
+**任务来源**：[Xiaoyue 10/13 的评论](https://linear.app/kira-learning/issue/APACUIX-445)：「学生端没问题……另外分值统一写 1 pt / - / 1 pt（编辑器空卡和学生答题中现在是 pts）」；Asher 10/14 回复「学生答题中的 pts 在学生端，由 @chao 跟进」。
+
+**改了什么**：10 张答题页右上的分值从 `— / 1 pts` 改为 `- / 1 pt`（复数改单数，长破折号改为和成绩页一致的 `-`）。分值文字在实例里没有绑定组件属性，所以直接改的实例文字。
+
+涉及画板：Not Recorded、Recording、Processing、Audio Recorded、Try Again Available、Recording Cleared、Microphone Blocked、Save Failed、Paused - Not Recorded、Paused - Audio Recorded。
+
+**检查结果**：脚本扫了 Student 和 Student Components 两个 Section，已经没有 `pts` 和 `— /`。现在的分值写法有三种：`- / 1 pt` 14 处，`1 / 1 pt` 1 处，`0 / 1 pt` 2 处，组件母版里另有 6 处，写法也都是这三种。
+
+**库里待同步**：分值文字来自库组件 `Speak Aloud`（Role=Student, Scene=Preview）的默认值，这次只改了本文件的实例。库里同步的时候要把默认值一起改掉，不然新拖出来的实例还会是 `— / 1 pts`。上一节「需用户确认」第 3 条（答题页 `— / 1 pts`）现在已经处理。
+
+### 回复评论草稿（用户手动回评，不代发）
+
+> 学生答题中的分值已统一为 `- / 1 pt`（原来是 `— / 1 pts`），10 张答题页都改了；成绩页之前已经是 `1 / 1 pt`、`0 / 1 pt`、`- / 1 pt`。
+>
+> [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438)
+>
+> cc @Xiaoyue
