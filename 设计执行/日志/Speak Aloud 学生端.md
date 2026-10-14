@@ -199,3 +199,25 @@
 > [Results - Grading in Progress](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=12054-47854) · [Submitted Ungraded - Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50943)
 >
 > cc @Xiaoyue
+
+## 2026-10-14 · 同步到组件库 Kira Custom Components (TO BE ARCHIVED)
+
+**任务来源**：用户给出库文件 [Kira Custom Components (TO BE ARCHIVED)](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=74-28044)，要求找到要改的组件并修改。组件都在 `Assessment - WIP` 页（`16131:22844`）。
+
+**结果状态**：库文件已修改，**尚未发布**。插件 API 不能发布库，需要用户在 Figma 里手动 Publish。发布后，Question-Library 要接受库更新。
+
+| 组件 | 改动 | 影响范围 |
+| --- | --- | --- |
+| `Questions Answer State`（[`16131:27095`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=16131-27095)） | Rubric Graded：蓝字改灰字（`text/secondary`），加 Scroll 图标（`icon/secondary`）；Not Answered：改浅灰（`text/tertiary`），加 MinusCircle 图标（`icon/tertiary`）；**新增** `State=Insufficient Response`：琥珀色（`text/warning`）+ WarningCircle 图标（`icon/warning`）；Correct / Incorrect 不变；组件集改为宽度自适应；补组件描述 | 所有题型都在用。Rubric Graded 的灰字也会出现在 Coding / Essay / Short / Long Response 的老师端 Report 场景；Not Answered 的新样式会出现在各题型学生 Report-Ungraded 里。这是第 4 条「所有主观题统一」要的效果 |
+| `Speak Aloud / Audio Row`（[`17216:336621`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17216-336621)） | Student / Default 换成和 Teacher / Default 一样的可播放播放器；**删除** Student / Correct、Incorrect、Insufficient（学生端不按对错染色。库里原本只有 Speak Aloud 学生 Report 在用，删除前已把它改成 Student / Default）；Student / Empty 的图标换成 MicrophoneSlash（`icon/tertiary`）；描述改掉「Student=不可回放」 | 只影响 Speak Aloud 学生端。Teacher 变体没动。删掉的变体如需恢复，可从 Figma 版本历史找回 |
+| `Speak Aloud / Recording Area`（[`17217:336704`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17217-336704)） | Recording、Processing 删掉 `Discard Recording`（×），只留 ✓；Mic Blocked 按钮改为 `Tap to Speak` + Microphone 图标；更新描述 | 学生答题页和老师 Preview（Asher 第 6 条，要求相同）都用这个组件 |
+| `Speak Aloud`（[`17242:500`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17242-500)）· Role=Student, Scene=Report | 标签改成 Rubric Graded，分值 `1 / 1 pt`；`Expected Text` 改为 `Text for Students to Speak`；词块换成整句的 Target Text Block（复用 Ungraded 组件里已有的那块）；`Student Response` 改为 `Your Response`；删掉 Separator 和 Explanation Footer；**新增布尔属性 `Show No Speech Notice`**（默认关），控制播放器下方的 `No speech was heard in this recording.` | 其他状态靠覆盖切换：Insufficient Response 把标签切到 Insufficient Response、分值改 `0 / 1 pt`、打开布尔；Not Answered 把标签切到 Not Answered、分值 `- / 1 pt`，Audio Row 换成 Student / Empty |
+| `Speak Aloud` · Role=Student, Scene=Report-Ungraded | 同样换成整句目标文本、`Your Response`、可播放的播放器；分值 `- / 1 pt` | — |
+| `Speak Aloud` · Role=Student, Scene=Preview | 分值默认值从 `- / 2 pts` 改为 `- / 1 pt` | 新拖出来的答题卡默认就是 `- / 1 pt` |
+| `Speak Aloud - Student Report - Ungraded`（[`17225:140`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17225-140)） | Answered / Unanswered 的分值改为 `- / 1 pt`；补组件描述 | — |
+
+**没动的**：Speak Aloud 的老师端变体（Edit / Preview / Report / Grading）、Word Chip、Audio Row 的 Teacher 变体，都属于 Asher 的范围。
+
+**检查**：每个组件改完都截图核对过；另外临时放了一个实例，打开 `Show No Speech Notice`、切到 Insufficient Response，确认布尔属性和标签切换都能用，看完已删除。
+
+**发布后的后续**：Question-Library 里学生成绩页现在用的是本地组件 `Student Result Badge` 和 `Speak Aloud / Student Report`。库发布后，可以把这 7 张成绩页的题卡换回库里的 `Speak Aloud`（Role=Student, Scene=Report / Report-Ungraded）加覆盖，然后删掉本地组件，让设计稿直接引用库。答题页里之前做的覆盖（隐藏 ×、Tap to Speak、`- / 1 pt`）发布后和库默认值一致，保留不影响。
