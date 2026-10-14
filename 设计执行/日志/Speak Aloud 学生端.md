@@ -172,3 +172,30 @@
 > [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438)
 >
 > cc @Xiaoyue
+
+## 2026-10-14 · 补成绩页顶部的 Grading in Progress
+
+**任务来源**：PM 第 1 条第④点「未评完或报告未发布：顶部成绩卡显示 Grading in Progress，没有 Download PDF」。用户确认要补，库组件同步由用户负责。
+
+**沿用的先例**：Multiple Choice Student Section 的 Results 列（`Grading in Progress`、`Submitted Answers Review`）。那几张是 staging 截图（图片填充），不能直接复用，所以这张页面用组件按 staging 和 PM 原型④重新搭出来。
+
+**新增画板**：`Assessment Player / Desktop - Speak Aloud Results - Grading in Progress`（[`12054:47854`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=12054-47854)），放在 Submitted Ungraded 列最上面。原来的两张逐题回顾页往下挪，顺序和学生的实际流程一致：提交 → 成绩页 → 点 See what you answered → 逐题回顾。
+
+| 区块 | 做法 |
+| --- | --- |
+| 顶栏 | 复制成绩页的 `Assessment -Top nav` 后分离（实例改不了对齐方式）；返回改成 House 图标（16px，`icon/primary`）加 `Back to Home`（`text/sm/medium`）；删掉 Section 下拉。**不放 Download PDF** |
+| 顶部成绩卡 | 库组件 `Result Page Header`，`Type=Type3`（Grading in Progress 变体）：标题 `Chao Zhang: Water Cycle Quiz Results`，用时 `12min 30sec`；沙漏、`Grading in Progress`、`Your assessment has been submitted. Scores will be available after teacher review.` 用组件默认；隐藏组件自带的 AI Insights（评分中还没有 insights，staging 也不显示） |
+| Answer Details | 库组件 `My Question Record` 是 SAT 结构，分离后改成通用测验评分中的样子：Tabs 改为 Section 1–4，选中 Section 2；表头 `Category / Questions / Answered / Not Answered`，删掉 Accuracy 列，只留两行（`Overall (Section 2)` 23 / 21 / 2，`MS-ESS2-4 · Cycling of Water` 8 / 7 / 1）；`Answer Record` 去掉 Correct / Wrong 筛选和 Field-test 区，23 个题号格用 `Question item` 的 pending（已答）和 skipped（未答，14、20）；按钮改为 `See what you answered`。卡片底色绑 `fill/neutral/invert`；SAT 组件里带的隐藏层（Essay submitted 文案、隐藏的题号区）已删掉，默认图层名已全部改掉 |
+| 鼠标示意 | `See what you answered` 切 Hover，加 `Cursor / See What You Answered` |
+
+**其他**：需求卡 Notes 补了「the results top card shows Grading in Progress with no Download PDF」。
+
+**结果状态**：已截图核对。上一节「需用户确认」第 2 条（顶部成绩卡）已完成；第 1 条（库同步）由用户负责。
+
+### 回复评论草稿（用户手动回评，不代发）
+
+> 补了第④条的成绩页：未评完或报告未发布时，顶部成绩卡显示 Grading in Progress，没有 Download PDF；下面是 Answer Details（按 Section 统计已答 / 未答）和 Answer Record，点 See what you answered 进逐题回顾，题卡不显示状态，分数 `- / 1 pt`，录音可回听。
+>
+> [Results - Grading in Progress](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=12054-47854) · [Submitted Ungraded - Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-50943)
+>
+> cc @Xiaoyue
