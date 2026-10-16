@@ -145,3 +145,50 @@
 >
 > 待确认 8 项，最关键的是 #1：学生报告的 Not Yet Approaching 现在是红色，要和 Analytics 保持一套，需要学生报告同步改成中性。详见设计日志。
 > cc @Xiaoyue
+
+## 2026-10-16 · R1 走查后修改
+
+### 任务来源
+
+用户要求对照 Ticket（APAC-6071）和 PRD 检查设计稿，不符合的直接改。走查产物在 `走查/R1_报告.md`、`走查/R1_修改清单.md`，本节只记 Figma 上实际改了什么。
+
+### 操作摘要
+
+| 改动 | 节点 | 改前 | 改后 |
+| --- | --- | --- | --- |
+| 合并卡片副标题补 Estimated（PRD Scope / §1） | 12 张稿的 `Subtitle` | `Reading & Writing · click a row to filter the table below` | `Estimated domain bands · Reading & Writing · click a row to filter the table below`（Math、See all 8 两种写法同理） |
+| 无分科目的禁用域行 | [2260:3716](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2260-3716) 4 行、母版 [2677:4509](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2677-4509)、规范板示例 | `Band —` · `—` · `below benchmark` | `—` · `No scores yet`（缺口人数隐藏） |
+| 无分科目的 meta 卡 | 母版 [2679:4450](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2679-4450)、2260:3716 实例 | `No Math scores yet` + 一排 `— met or exceeded / — approaching / — not yet approaching / Avg — vs BM 530` | 只留 `Math · Class average · — / 800`；实例与右侧分布卡等高、内容顶对齐 |
+| Band 标签底色对齐学生报告 band 徽标 | [2674:4312](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2674-4312)（45 个实例随母版） | Band 5–7 `fill/positive/quaternary`；Band 3–4 `fill/warning/quaternary` | Band 5–7 `fill/positive/tertiary`（= `green/100`）；Band 3–4 `yellow/100`；文字色不变 |
+| 学生报告 Not Yet Approaching 药丸 | `SAT Report / Single subject hero`、`Reading and Writing hero` 里的 Badge [2585:96818](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2585-96818)、[2585:96838](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2585-96838)，学生报告 03 / 04 / 05 三张稿随母版更新 | `fill/negative/quaternary` + `text/negative`（红） | `fill/neutral/subtle` + `text/secondary`，挂注释：staging 仍是红色，需要前端跟进 |
+| 规范板、组件描述、需求说明卡 | [2687:5261](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2687-5261)、[2260:3003](https://www.figma.com/design/OVpujOifLrARaLV9F503rq/Assessment-4.0---SAT?node-id=2260-3003)、Band Label 描述 | 写的是旧 token、学生报告「待对齐」 | 同步为新 token 和「10/16 已对齐、staging 待跟进」；Last Updated 改为 `10/16/2026 - Chao` |
+
+核对后确认符合、没有改动的部分（详见 R1 报告）：两科平均分、三档人数、各 band 人数、分母、筛选后行数、排序、band 区间、题量、Skills Insight 原文、空态 / 失败 / 加载文案、单科稿的隐藏规则。
+
+### 结果状态
+
+R1 修改清单 10 条：已改 6、搁置 4（其中 2 条需 PM 确认）。
+
+### 需用户确认状态更新
+
+接上一节「需用户确认」表：
+
+| # | 状态更新 |
+| --- | --- |
+| 1 | 学生报告 Not Yet Approaching 已在 Figma 改为中性（Ticket 第 1 条明确要求三处共用一套）；staging 仍是红色，**需要前端跟进**。学生报告 Band 1–2 在 Figma 稿里没有出现，原型里仍是红色，前端改时一并处理 |
+| 2 | 仍待确认（Band 写法冒号 vs 中点） |
+| 3 | 仍待确认；本轮把 Band 3–4 底色改成和学生报告完全相同的 `yellow/100`，和 Approaching 单元格的浅橙底略有区分 |
+| 7 | 已改为 `—` · `No scores yet`（按原型） |
+| 新增 | 失败态保留作业标题是否接受（R1 清单 #7） |
+
+### Linear 评论草稿（不代发，需要时手动贴）
+
+> 已按 Ticket 和 PRD 做了一轮走查（R1），改了 6 处：
+>
+> - 合并卡片副标题加 `Estimated domain bands`（PRD 要求 domain band 始终标注 Estimated）
+> - 无分科目的禁用域行改为 `— · No scores yet`；无分科目的 meta 卡只留 `— / 800`
+> - 域行 Band 标签底色改成和学生报告 band 徽标完全相同的颜色
+> - 学生报告 Not Yet Approaching 药丸在 Figma 改为中性灰，和 Analytics 共用一套。**staging 仍是红色，需要前端跟进**
+>
+> 数字（平均分、三档、各 band 人数、分母、排序）和 Skills Insight 原文都核对过，没有问题。待确认：Band 写法冒号 vs 中点、失败态是否保留标题。
+> cc @Xiaoyue
