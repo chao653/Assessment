@@ -221,3 +221,33 @@
 **检查**：每个组件改完都截图核对过；另外临时放了一个实例，打开 `Show No Speech Notice`、切到 Insufficient Response，确认布尔属性和标签切换都能用，看完已删除。
 
 **发布后的后续**：Question-Library 里学生成绩页现在用的是本地组件 `Student Result Badge` 和 `Speak Aloud / Student Report`。库发布后，可以把这 7 张成绩页的题卡换回库里的 `Speak Aloud`（Role=Student, Scene=Report / Report-Ungraded）加覆盖，然后删掉本地组件，让设计稿直接引用库。答题页里之前做的覆盖（隐藏 ×、Tap to Speak、`- / 1 pt`）发布后和库默认值一致，保留不影响。
+
+## 2026-10-16 · 不确定项按 PRD 定稿
+
+**任务来源**：用户要求把核对 APACUIX-445 时列出的不确定项「以 PRD 为准」改设计稿。依据的是 [PRD](https://app.notion.com/p/3e270a1b99248169bd37fb0eec960a5e) 10/13 15:15 的版本。
+
+| 不确定项 | PRD 依据 | 结论 |
+| --- | --- | --- |
+| 原型里的 Feedback Notes / View My Feedback | §5：成绩页不显示 Feedback Notes、View My Feedback | 稿子早已去掉，不用改 |
+| 已评分、未作答的分数 | §5 评分表：Unanswered → 0 分 | **改为 `0 / 1 pt`**（ticket ⑤ 写的是 `- / 1 pt`） |
+| 成绩页的 Mark for Review | §5：成绩页不显示 Mark for Review | 稿子早已去掉，不用改 |
+| 录音时去掉取消（与「控件和课程一致」冲突） | §4.2 只写「学生可以停止」，没有取消 | 保留现状：只有停止按钮 |
+| 未发布且未作答 | §5：未评完或报告未发布，不显示状态、分数显示 `-` | 保留现状：不显示标签，`- / 1 pt` |
+| Rubric Graded 灰字是否波及 Coding、老师端 | §5：所有主观题的 Rubric Graded 都改；Coding 的 Report 用的也是 Rubric Graded | 保留 |
+| Not Answered 的颜色 | §5 只写「Not Answered 加图标」，没说改浅灰（浅灰来自 ticket 汇总图） | **恢复原来的深灰**：`text/secondary` + `icon/secondary`，对比度从 3.25:1 回到 7.17:1 |
+| 老师改了 Insufficient Response 的分数后学生看到什么；Rubric Graded 的叫法 | PRD 没写前者；后者 PRD 明确就叫 Rubric Graded | 不改 |
+
+**改动**
+
+| 文件 | 节点 | 改动 |
+| --- | --- | --- |
+| Question-Library | `Speak Aloud / Student Report` · State=Not Answered（[`11944:48673`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11944-48673)） | 分值 `- / 1 pt` → `0 / 1 pt`；[Graded - Not Answered](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556) 跟着组件更新 |
+| Question-Library | `Student Result Badge` · State=Not Answered（[`11942:47762`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11942-47762)） | 文字和图标改为 `text/secondary`、`icon/secondary` |
+| 组件库 | `Questions Answer State` · State=Not Answered | 文字和图标改为 `text/secondary`、`icon/secondary` |
+| 两边 | 组件描述 | 补上上面的口径（未作答计 0 分，Not Answered 维持原来的颜色） |
+
+**发现的发布状态**：组件库已经发布过一次，Question-Library 也接受了更新。`Speak Aloud`、`Recording Area`、`Audio Row` 的改动都已生效（例如录音中画板里的取消按钮图层已经没了）。**但 `Questions Answer State` 没在那次发布里**，Question-Library 拿到的还是旧版：没有图标，没有 Insufficient Response。另外，`Speak Aloud` 的组件描述今天又更新过，需要再发一次才同步。
+
+**另一处变化（不是这次改的）**：本地组件 `Speak Aloud / Student Report` 里的 Language 标签已经换成 `Variant=Secondary`（灰色描边），看起来是手动调整的，保持不动。
+
+**检查**：已截图核对 Graded - Not Answered 画板，以及两边的状态标签组件。
