@@ -79,6 +79,21 @@
 
 六处出图点全部落稿，14 张状态稿已切换到新组件，新增规范板一张。待 Chao 自查后提 PM 走查。
 
+参考截图（`参考截图/`）：
+
+| 文件 | 内容 |
+| --- | --- |
+| `2026-10-15-apac-6071-section-overview.png` | 整个 Section 缩略图 |
+| `2026-10-15-apac-6071-visual-spec.png` | 新增规范板 |
+| `2026-10-15-apac-6071-components.png` | SAT Analytics · Components |
+| `2026-10-15-apac-6071-rw-distribution-expanded.png` | R&W 分布展开（改后） |
+| `2026-10-15-apac-6071-domain-filtered-skills-insight.png` | 域行筛选 + Skills Insight（改后） |
+| `2026-10-15-apac-6071-math-histogram-hover.png` | Math 分布悬停（改后） |
+| `2026-10-15-apac-6071-show-less-pinned.png` | Show less 选中行置顶（改后） |
+| `2026-10-15-apac-6071-no-math-scores.png` | Math 无分 |
+| `2026-10-15-apac-6071-requirement-card.png` | 需求说明卡（改后） |
+| `2026-10-15-apac-6071-before-*.png` | 改前对照（R&W 分布展开、域行筛选） |
+
 ### 已确认（来自 PRD / Linear）
 
 - 分数单元格用官方三档 `Meets or Exceeds`（≥ BM）/ `Approaching`（R&W 460–470、Math 510–520）/ `Not Yet Approaching`，没有 `At BM` 档；学生报告、班级 Analytics、学生表共用一套，不可分叉；Not Yet Approaching 不用告警红。
