@@ -400,4 +400,6 @@ ticket 第 2 张的按钮颜色是 (130, 100, 231)，是 Primary 加上 Hover �
 
 **核对结果**：6 张录音区画板和 ticket 第 2、3、8–11 张对比，结构、按钮、文案都一致。录音中和两张重录失败的说明文字换行位置和 ticket 差一两个词，原因是 ticket 里 PM 改过的文字渲染得更窄，字号、行高和文字框宽度都没问题（首次失败的两张，第一行宽度和 ticket 完全相同：464px、449px），不改。
 
+**`Questions Answer State` 仍未发布**：从 Question-Library 导入的已发布版本只有 Correct、Incorrect、Not Answered、Rubric Graded 四个变体，没有 Insufficient Response，Rubric Graded 也没有图标。和 10/16 那次一样，这个组件没包含在发布里。学生成绩页现在用的是本地 `Student Result Badge`，画面不受影响；但其他题型的成绩页、以及成绩页换回库组件，都要等它发布。
+
 **老师端 Preview（没改，需要 Asher 处理）**：Recording、Processing、Audio Recorded、Microphone Blocked 4 张也还指向旧版变体，所以录音中、处理中仍是 ✓，已录没有播放器。按「只改学生端」的要求没动；处理方式和学生端一样，把录音区切到最新版变体即可。
