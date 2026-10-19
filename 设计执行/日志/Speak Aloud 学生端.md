@@ -329,3 +329,20 @@
 **影响**：发布并在各文件接受更新后，老师端 Preview（Asher）里的录音中、处理中、已录也会变成停止图标、加载状态、带播放器和 Try again，和 PRD 一致。Asher 那边如果有画板依赖旧默认值（比如 Try Again Off 的已录态），需要他看一下。Question-Library 学生画板上之前做的覆盖，和新的默认值一致，不受影响。
 
 **检查**：已截图核对 `Recording Area` 全部 8 个变体。
+
+## 2026-10-19 · Processing 状态改回和 ticket 截图一致
+
+**任务来源**：用户指出组件库的 Processing 状态（[`17217:336700`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17217-336700)）和 ticket 第 3 张截图对不上。
+
+**原因**：我按 PRD §4.2「the stop button shows a loading state」，把转圈图标放进了停止按钮，同时删掉了「Processing...」前面的转圈。但 ticket 截图的样子是：置灰按钮、转圈在文字前面。这是我自己的发挥，和截图不一致。
+
+**改动**：布局照截图：置灰的停止按钮、「Processing...」前面有转圈、下面是说明文字。唯一和截图不同的是按钮图标：截图里还是 ✓，但同一张 ticket 的第 5 条明确要求结束按钮把 ✓ 换成停止图标，所以用停止图标。
+
+| 位置 | 改动 |
+| --- | --- |
+| 组件库 `Recording Area` · State=Processing | 按钮图标从 CircleNotch 换回 Stop（Fill，白色），按钮保持 Disabled；在 Processing Status 里重新加上 CircleNotch（16px，`icon/primary`），放在「Processing...」前面；组件描述改为「while processing the stop button is disabled and Processing... shows a spinner」 |
+| Question-Library · Processing 画板 | 按钮覆盖改为 Stop（白色），保持 Disabled |
+
+**还差一步**：Question-Library 已经接受了你今天 10:20 之后发布的那版库（那一版删掉了转圈）。实例里没法新增图层，所以这张画板的转圈要等你**再发布一次组件库**、并在 Question-Library 里接受更新之后才会出现。
+
+**检查**：已截图核对组件库的 Processing 状态（和截图布局一致）和 Question-Library 的 Processing 画板（按钮已改好，转圈要等发布）。
