@@ -308,3 +308,24 @@
 > [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438)
 >
 > cc @Xiaoyue @pamper
+
+## 2026-10-19 · 补改组件库 Recording Area 的默认值
+
+**任务来源**：用户指出组件库里录音中的控件（[`17562:16418` Recording Actions](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17562-16418)）还是旧样式，问为什么没有改。
+
+**原因**：上一轮我把「只改学生端」理解成「不改学生和老师 Preview 共用组件的默认值」，所以只在学生画板上用覆盖改了图标和文案，库里的组件本身没动。这个理解太保守了：`Recording Area` 只在测评里用（课程用的是另一个组件），而 PRD 要求老师 Preview 的录音控件和学生端一致，所以默认值本来就该改。
+
+**改动**（组件库 `Speak Aloud / Recording Area`，[`17217:336704`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17217-336704)）
+
+| 状态 | 改动 |
+| --- | --- |
+| Recording | `Finish Recording`（✓）改为 `Stop Recording`，图标换成 Phosphor Stop（Fill），颜色绑 `icon/invert`；提示改为 `Tap stop when you finish. Recording stops on its own once every word is heard, or after 100 seconds.` |
+| Processing | 停止按钮改为加载状态，图标换成 CircleNotch；删掉 Processing Status 里重复的加载图标 |
+| Recorded | `Show Try Again`、`Show Player` 的默认值都改为开启：测评没有 Allow Try Again 开关，交卷前的已录状态一律显示播放器和 Try again |
+| Recorded + Disabled | 删掉 Try again 按钮：暂停、锁定、交卷后都不能重录。这个按钮原来绑在 `Show Try Again` 上，默认值改为开启后会误显示，所以删掉 |
+| 组件描述 | 改掉过时的说法：「Allow Try Again」「Try again 会清掉当前录音」「答题时不能回放」 |
+| 布局 | Recorded 变体加了播放器后变高，把后面的变体依次下移，组件集高度跟着调整 |
+
+**影响**：发布并在各文件接受更新后，老师端 Preview（Asher）里的录音中、处理中、已录也会变成停止图标、加载状态、带播放器和 Try again，和 PRD 一致。Asher 那边如果有画板依赖旧默认值（比如 Try Again Off 的已录态），需要他看一下。Question-Library 学生画板上之前做的覆盖，和新的默认值一致，不受影响。
+
+**检查**：已截图核对 `Recording Area` 全部 8 个变体。
