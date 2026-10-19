@@ -251,3 +251,60 @@
 **另一处变化（不是这次改的）**：本地组件 `Speak Aloud / Student Report` 里的 Language 标签已经换成 `Variant=Secondary`（灰色描边），看起来是手动调整的，保持不动。
 
 **检查**：已截图核对 Graded - Not Answered 画板，以及两边的状态标签组件。
+
+## 2026-10-19 · APACPO-329 PM Design Review 2（学生端）
+
+**任务来源**：[APACPO-329 [PM Design Review 2] Student View: Speak aloud](https://linear.app/kira-learning/issue/APACPO-329/pm-design-review-2-student-view-speak-aloud)。用户要求只改学生端。规则以 [PRD](https://app.notion.com/p/3e270a1b99248169bd37fb0eec960a5e) 10/19 09:45 版为准：测评没有 Allow Try Again 开关，交卷前随时可以重录；已录状态有播放器；录音时用停止图标；Processing 时停止按钮显示加载状态；重录各分支的文案写在 §4.5。
+
+### 逐条处理
+
+| # | 要求 | 改了什么 |
+| --- | --- | --- |
+| 1 | 作答页、回看页用 staging 的页面外壳 | 答题页：顶栏改为 `Staging / Exam Top Bar`（左边 Back to Home，计时器在右边；去掉标题、Tools、缩放、More、违规计数）；去掉 Section 进度条；底栏去掉左右箭头，只留 6 个题号，右侧为 View All + `Next`。回看页：顶栏改为 `Staging / Review Top Bar`（只有 ← Back，去掉 Section 下拉）；`Prev` 改为 `Previous`；底栏去掉箭头。所有画板统一为 1440×900 |
+| 2 | 已录状态保留 Try again；点了 Try again 回到 Tap to Speak；重录失败时保留上一段录音 | 已录状态始终显示 Try again。点了 Try again 后的提示改为 `Your last recording is still saved. Record again to replace it.`。新增「重录成功」画板（播放器换成新录音 0:07），以及「重录时麦克风被拒」「重录保存失败」两张画板（文案按 PRD §4.5） |
+| 3 | 暂停不用单独画题卡 | 删除 `Paused - Not Recorded`、`Paused - Audio Recorded` 两张画板，改为一张 `Assignment Paused`：用 `surface/layer/scrim` 遮罩加背景模糊，盖住 staging 页面；弹窗用 ShadCN Alert Dialog，只留 `Back to Dashboard` 按钮 |
+| 4 | 已录状态加播放器 | 已录状态显示 Audio recorded、`Your teacher can listen to this recording.`、播放器和 Try again；播放器宽 540px，和录音波形条一样宽。另新增「已录 - 播放中」画板（暂停图标，0:04 / 0:08，进度条走到 50%）。点了 Try again 之后不显示播放器 |
+| 5 | 录音时用停止图标，并改提示文案 | 结束录音的按钮由 ✓ 改为 Stop（Phosphor Fill，白色 `icon/invert`）；提示改为 `Tap stop when you finish. Recording stops on its own once every word is heard, or after 100 seconds.`。Processing 时停止按钮里换成加载图标 CircleNotch（PRD §4.2），并去掉状态行里重复的那个加载图标 |
+
+### 画板排列（Student Section）
+
+- **Record Answer**：Not Recorded → Recording → Processing → Recorded → Recorded - Playing
+- **Try Again**：Try Again - Ready to Re-record（原 Recording Cleared）→ Re-recorded
+- **Recording Errors**：Microphone Blocked → Save Failed → Re-record - Microphone Blocked → Re-record - Save Failed
+- **Paused or Locked**：Assignment Paused
+- **Submitted Ungraded**：Results - Grading in Progress → Submitted Ungraded - Answered → Not Answered
+- **Graded**：Full Points → 0 Points → Insufficient Response → Not Answered → Needs Grading
+
+鼠标示意按之前的口径重新放过：每张有可点控件的画板，在主要操作上放 pointer；是按钮的话切到 Hover 态。
+
+### 组件
+
+| 位置 | 组件 | 改动 | 是否影响老师端 |
+| --- | --- | --- | --- |
+| 组件库 | `Speak Aloud / Recording Area` | **新增**布尔属性 `Show Player`（默认关），Recorded 状态里加了播放器（Audio Row · Student / Default，宽 540） | 不影响。默认关闭，老师端 Preview 看不到 |
+| 组件库 | `Speak Aloud / Audio Row` | **新增**变体 `Role=Student, State=Playing` | 不影响。只新增了一个学生端变体 |
+| Question-Library 本地组件 | `Staging / Exam Top Bar`、`Staging / Review Top Bar` | staging 的页面外壳，库里没有对应的组件 | — |
+| Question-Library 本地组件 | `Speak Aloud / Student Recorded Area`（Recorded、Recorded - Playing） | 临时替身：库里新加的 `Show Player` 和 `Student / Playing` 发布前，Question-Library 用不上，先用本地组件顶上 | — |
+
+学生画板上用覆盖完成的改动（共享组件 `Recording Area` 的默认值没动，老师端不受影响）：Stop 图标和新提示文案、Processing 的加载图标、打开 Try again、点了 Try again 后的提示、重录失败的提示。
+
+**没有按 ticket 图做的一处**：ticket 第 3 张（处理中）图里按钮还是置灰的 ✓。我按第 5 条和 PRD §4.2 做成了停止按钮的加载状态。
+
+### 待跟进
+
+1. **发布组件库**：`Recording Area`（Show Player）、`Audio Row`（Student / Playing），以及之前还没发的 `Questions Answer State`。发布后，可以把 Recorded 相关的 4 张画板（Recorded、Recorded - Playing、Re-recorded、Assignment Paused）里的录音区换回库组件（打开 `Show Player`），再删掉本地的 `Speak Aloud / Student Recorded Area`。
+2. **老师端 Preview**：PRD 要求 Preview 的录音控件和学生端一样。按用户「只改学生端」的要求，这次没有动老师端；Asher 那边如需同步，可以用同样的覆盖方法，或者把库里的默认值改掉。
+3. Xiaoyue 在评论里提到可以建 sub-issue，这次没有建。
+
+### 回复评论草稿（用户手动回评，不代发）
+
+> 学生端按 PRD Design Review 2 改完了：
+>
+> 1. 作答页和交卷后回看页换成 staging 原样的顶栏、按钮和底栏题号，去掉了 Section 进度条、标题、Tools 和违规计数。
+> 2. 已录状态有播放器和 Try again；点了 Try again 回到 Tap to Speak，并提示上一段录音还在；补了重录成功、重录时麦克风被拒、重录保存失败三张画板。
+> 3. 两张 Paused 题卡删了，换成 staging 的 Assignment Paused 弹窗。
+> 4. 录音中用停止图标，提示改为 `Tap stop when you finish…`；处理中时停止按钮显示加载状态。
+>
+> [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438)
+>
+> cc @Xiaoyue @pamper
