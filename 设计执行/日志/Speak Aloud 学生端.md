@@ -346,3 +346,33 @@
 **还差一步**：Question-Library 已经接受了你今天 10:20 之后发布的那版库（那一版删掉了转圈）。实例里没法新增图层，所以这张画板的转圈要等你**再发布一次组件库**、并在 Question-Library 里接受更新之后才会出现。
 
 **检查**：已截图核对组件库的 Processing 状态（和截图布局一致）和 Question-Library 的 Processing 画板（按钮已改好，转圈要等发布）。
+
+## 2026-10-19 · Processing 停止按钮逐像素对 ticket
+
+**任务来源**：用户再次指出组件库 Processing 状态的停止按钮（[`17562:16529`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17562-16529)）不对。
+
+**原因**：上一轮只核对了属性，没在 1x 下和 ticket 截图逐像素比。实际有两处问题：
+
+1. **组件集没有底色**。`Recording Area` 的变体都是透明的，直接压在深灰 Section（#444）上。Disabled 按钮是 50% 不透明度，叠在深灰上变成暗紫色、白色方块变成灰色，和截图的浅紫按钮（压在 #FAFAFA 的题卡上）完全两样。同 Section 里的 Audio Row、Edit、Student Report 组件集都有白底，只有这个没有。
+2. **停止图标多了一圈描边**。从 ✓ 换成 Stop 时，✓ 图标上的描边覆盖（`icon/invert`，1.33px）被带了过来。Phosphor Stop（Fill）本身只有填充、没有描边。录音中的停止按钮也有同样问题。
+
+**改动**
+
+| 位置 | 改动 |
+| --- | --- |
+| 组件库 `Speak Aloud / Recording Area` 组件集 | 底色设为 `fill/neutral/surface`（#FAFAFA，DS 2.0 Foundations），和学生端题卡里录音区的底色一致。只影响组件集本身的展示，不影响实例 |
+| 组件库 Recording、Processing 的停止按钮 | 去掉 Stop 图标上带过来的描边，只保留 `icon/invert` 填充 |
+| Question-Library Recording、Processing 画板 | 同样去掉描边（覆盖值和库里一致，发布后不冲突） |
+
+**核对结果**（1x 截图和 ticket 第 2、3 张逐像素比）
+
+| 项目 | ticket | 现在 |
+| --- | --- | --- |
+| Processing 按钮颜色 | (183, 166, 239) | (183, 166, 239)，就是 Primary 50% 叠在 #FAFAFA 上 |
+| 按钮尺寸、位置 | 40px，波形下方 16px | 40px，波形下方 16px |
+| 「Processing...」、说明文字的位置 | 距波形顶部 120–133、156–169 | 一致 |
+| 停止方块 | 12px | 11px：DS 2.0 Icons 的 Phosphor Stop（Fill）在 16px 下就是 11px。ticket 截图用的不是同一套图标，按 DS 标准尺寸保留 |
+
+ticket 第 2 张的按钮颜色是 (130, 100, 231)，是 Primary 加上 Hover 的 10% 白色叠加，也就是截图时鼠标停在按钮上，和组件的 Hover 状态一致。
+
+**还差一步**：Question-Library 的 Processing 画板里「Processing...」前面仍然没有转圈，因为它用的还是已发布的旧版库。需要**发布组件库**，再在 Question-Library 里接受更新，转圈、去掉的描边、组件集底色才会同步。
