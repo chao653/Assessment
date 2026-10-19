@@ -376,3 +376,28 @@
 ticket 第 2 张的按钮颜色是 (130, 100, 231)，是 Primary 加上 Hover 的 10% 白色叠加，也就是截图时鼠标停在按钮上，和组件的 Hover 状态一致。
 
 **还差一步**：Question-Library 的 Processing 画板里「Processing...」前面仍然没有转圈，因为它用的还是已发布的旧版库。需要**发布组件库**，再在 Question-Library 里接受更新，转圈、去掉的描边、组件集底色才会同步。
+
+## 2026-10-19 · 组件库发布后检查 Question-Library
+
+**任务来源**：用户发布了组件库，要求检查 [Question-Library › Speak Aloud](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11436-35232) 是否正确。
+
+**发现的问题**
+
+1. **切换过状态的录音区没有跟着更新。** 文件已经接受了库更新，但只有题卡里默认的 Idle 录音区换成了新版。画板上切到 Recording、Processing、Mic Blocked、Save Failed 的录音区，还指向旧版变体（`11731:` 开头的组件副本）。学生端 6 张、老师端 Preview 4 张都是这样。
+2. **处理中画板的转圈被一条旧覆盖隐藏了。** 上一轮把转圈挪进按钮时，在画板上把状态行里的 CircleNotch 设成了隐藏。库里加回转圈后，这条覆盖还在，所以发布后也显示不出来。之前几次检查用的脚本默认跳过隐藏图层，所以没发现。
+3. **本地替身 `Speak Aloud / Student Recorded Area` 还在用。** 它是发布前的临时组件，库里的 `Show Player` 和 `Student / Playing` 发布后就该换掉。
+
+**改动**（只动学生端）
+
+| 位置 | 改动 |
+| --- | --- |
+| 学生端 6 张画板（Recording、Processing、Microphone Blocked、Save Failed、两张 Re-record 失败） | 录音区切到最新版变体。文案、按钮状态都核对过：切换后有 3 个按钮从 Hover 掉回 Default（录音中的停止按钮、两张麦克风被拒的 Tap to Speak），已改回 Hover，和鼠标示意对应 |
+| Processing 画板 | 取消隐藏状态行里的 CircleNotch |
+| Recorded、Recorded - Playing、Re-recorded、Assignment Paused | 本地替身换回库里的 `Recording Area` · State=Recorded（`Show Player`、`Show Try Again` 打开）。Re-recorded 保留时长 `0:00 / 0:07`；Recorded - Playing 的播放器用库里的 `Role=Student, State=Playing`。替换前后逐像素对比，4 张完全一致 |
+| Student Components | 删除 `Speak Aloud / Student Recorded Area`（删除前确认整个文件已没有实例） |
+
+**没换的：成绩页的 `Speak Aloud / Student Report` 和 `Student Result Badge`。** 先在 Graded - Full Points 上试着换成库里的 `Speak Aloud` · Role=Student, Scene=Report，发现库里的目标句是白底描边的小字框，本地版本和 ticket 第 15 张都是灰底大字块，卡片也因此矮了 12px、鼠标示意错位。已换回本地组件，逐像素确认和替换前一致。要换回库组件，需要先把库里 Report、Report-Ungraded 的目标句改成和 ticket 一致，再发布一次。
+
+**核对结果**：6 张录音区画板和 ticket 第 2、3、8–11 张对比，结构、按钮、文案都一致。录音中和两张重录失败的说明文字换行位置和 ticket 差一两个词，原因是 ticket 里 PM 改过的文字渲染得更窄，字号、行高和文字框宽度都没问题（首次失败的两张，第一行宽度和 ticket 完全相同：464px、449px），不改。
+
+**老师端 Preview（没改，需要 Asher 处理）**：Recording、Processing、Audio Recorded、Microphone Blocked 4 张也还指向旧版变体，所以录音中、处理中仍是 ✓，已录没有播放器。按「只改学生端」的要求没动；处理方式和学生端一样，把录音区切到最新版变体即可。
