@@ -506,3 +506,30 @@ Question-Library 本地组件用的 `input/bg-disabled`、`input/text` 来自另
 **清理**：确认整个文件没有其他实例后，删除本地组件 `Speak Aloud / Student Report` 和 `Student Result Badge`。Student Components 里剩下的 `Staging / Exam Top Bar`、`Staging / Review Top Bar`、`Staging / Bottom Bar` 重新排到区域顶部，区域高度 1622 → 688。
 
 **发现：Question-Library 还没接受最新的库更新。** 除了这 7 张成绩页，页面上其余 `Speak Aloud` 实例都还指向上一版副本（`12192`）：学生端 12 张作答页、老师端 Preview 5 张、Teacher Editor 20 张、Teacher Grading 20 张。这次发布只改了学生端成绩卡，所以旧版实例画面不受影响。建议在 Question-Library 接受一次库更新，让版本统一；接受后需要再检查一遍作答页里切换过状态的录音区（10/19 出现过只更新默认状态、其余状态停在旧版的问题）。
+
+## 2026-10-20 · 处理中按钮里的方块改成加载
+
+**任务来源**：Xiaoyue 在 [APACPO-329](https://linear.app/kira-learning/issue/APACPO-329/pm-design-review-2-student-view-speak-aloud) 回复「设计稿已经更新」（评论 `cacf1d46`）：「还没过。处理中圆按钮留着，里面的方块换成加载，这一步不能再点。旁边的小加载去掉，文案仍是 `Processing...`。其余不用改。」附图左边是现在的样子（方块 + 文案旁的小转圈），右边是建议（圆按钮里一条加载圆弧，文案旁没有小转圈）。
+
+**改动**（只动处理中这一态，学生端）
+
+| 位置 | 改动 |
+| --- | --- |
+| 组件库 `Speak Aloud / Recording Area` · State=Processing（[`17217:336700`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17217-336700)） | 圆按钮保持 `Variant=Default, State=Disabled, Size=icon`（40px，不可点，颜色仍是置灰紫）。里面的 Stop 方块换成按钮库的 `Icon / LoaderCircle`（白色 `icon/invert`，圆头描边，描边加粗到 2.5，16px 槽里才看得清）。状态行里的 CircleNotch 隐藏。文案仍是 `Processing...`（Medium 14）。说明文字、波形、间距都没动 |
+| Question-Library 学生端 Processing 画板（[`11521:14869`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14869)） | 同一套覆盖：按钮图标换成 `Icon / LoaderCircle`，旁边的小加载隐藏。这张画板的录音区还指向上一版已发布副本，所以先用覆盖让画面跟上，等发布后再收 |
+
+按钮中心颜色仍是 (183, 166, 239)，和置灰按钮、也和评论附图右边的圆按钮一致。重录走的是同一个 Processing 变体，没有单独的画板。
+
+**没改成附图的两点**
+
+1. 附图里的圆弧开口朝下，用的是手绘示意。按钮库里的加载图标 `Icon / LoaderCircle` 开口朝右，实例里改不了旋转，按图标本身的方向放。
+2. 附图里的圆弧比 16px 图标槽大一圈。按钮把图标锁在 16px，拉不大。描边加到 2.5 是为了在这个尺寸下和附图一样粗；图标默认描边是 1，缩到 16px 后几乎看不见。
+
+老师端 Preview 的 Processing 没单独改。这个变体是学生端和老师端共用的，发布之后老师端会一起变成加载圆弧。
+
+**可以回复 Xiaoyue 的草稿（未发送）**
+
+> @xiaoyue 处理中已改：圆按钮留着，这一步不能再点；里面的方块换成加载圆弧，旁边的小加载去掉了，文案仍是 Processing...。其余没动。
+> 学生端：https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14869
+
+**还差一步**：组件库的 `Recording Area` 需要再发布一次。发布后 Question-Library 里这张画板的覆盖可以收掉，改成直接用新版变体。
