@@ -432,3 +432,53 @@ Question-Library 本地组件用的 `input/bg-disabled`、`input/text` 来自另
 测试用的临时实例已删除。
 
 **还差一步**：库改动需要**再发布一次**（`Speak Aloud`）。发布后，在 Question-Library 把 7 张成绩页的题卡从本地 `Speak Aloud / Student Report` 换成库里的这两个变体，逐张和替换前的截图对比，再删除本地的 `Student Report`、`Student Result Badge`。
+
+## 2026-10-20 · 对照 APACPO-329 逐张检查学生端
+
+**任务来源**：用户要求对照 [APACPO-329](https://linear.app/kira-learning/issue/APACPO-329/pm-design-review-2-student-view-speak-aloud) 再检查一遍 [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438)。
+
+**方法**：下载 ticket 的 18 张参考图（1440×900），和对应画板的 1x 截图逐像素比，分顶栏、题卡、底栏三块统计差异，再逐处放大确认。组件库 `Speak Aloud` 的成绩卡改动这时还没发布，成绩页继续用本地组件。
+
+**发现的问题：staging 外壳没有照截图做准。** ticket 说明这些图是「staging 的真实页面，只把题卡换成 Speak Aloud」，所以外壳部分要和截图一致。之前做外壳时只对了结构，样式和尺寸有不少偏差：
+
+| 位置 | ticket（staging） | 之前 |
+| --- | --- | --- |
+| 作答页顶栏「Back to Home」 | 图标 x=38，文字 x=81，Regular，(24, 24, 27) | 图标 x=18，文字 x=41，Medium，(10, 10, 10) |
+| 作答页计时器 | 130×51 的框，6px 圆角，`base/border` 描边，(250, 250, 250) 底；数字 20px；冒号和大写 HR / MIN / SEC 是 (113, 113, 122) | 没有框，小写 hr / min / sec，冒号是全角「：」，间距更宽 |
+| 作答页底栏题号 | 普通题号 (244, 244, 245) 底、(113, 113, 122) 字；第 1 题也是普通样式；当前题 (124, 58, 237) | 普通题号 (250, 250, 250) 底、(144, 144, 144) 字；第 1 题浅紫（已作答）；当前题 (116, 82, 228) |
+| 作答页 View All、Next | 6px 圆角；View All 宽 112，和 Next 间隔 16 | 胶囊形；View All 宽 110，间隔 12 |
+| 题卡里的 Prev / Previous / Next | 按内容自适应：Prev 88、Previous 116、Next 89；成绩页两按钮间隔 4 | 固定 101 宽，「Previous」文字顶到右边框；间隔 8 |
+| Mark for Review | 宽 166（图标和文字间距 10） | 宽 164（间距 8） |
+| 成绩页内容位置 | 白色面板从 y=92 开始 | 从 y=100 开始，整体低 8px |
+| 成绩页底栏 | 第 1 题浅红 (255, 205, 195)、深红字 (180, 0, 0)；当前题 (124, 58, 237) 叠 80% 不透明度 = (150, 97, 240)；其他普通样式；顶部 1px `base/border` 线 | 按对错上绿、橙色；当前题白底深绿描边；没有顶部线 |
+| 老师暂停弹窗 | 600 宽、垂直居中；正文 16/24；按钮高 36；遮罩 50% 黑，背景模糊到看不清字 | 512 宽、偏上 40px；正文 14/20；按钮高 40；遮罩 64% 黑，模糊 4，字还读得出 |
+
+**改动**（都在 Question-Library，只动学生端）
+
+| 位置 | 改动 |
+| --- | --- |
+| 本地组件 `Staging / Exam Top Bar` | 左边距 36、图标和文字间距 28；文字改 Regular，文字和图标用 `base/foreground`；下边线用 `base/border`。计时器重做：130×51 框，`base/sidebar-background` 底、`base/border` 描边、6px 圆角；数字 Inter Medium 20/24，冒号和标签 `base/muted-foreground`，标签 Regular 14/16 大写，每个标签和上面的数字居中对齐 |
+| **新建**本地组件集 `Staging / Bottom Bar`（Student Components） | 从原来的底栏复制。`Page=Exam`：题号 `base/secondary` 底 + `base/muted-foreground` 字，当前题 `violet/600`；View All、Next 6px 圆角，View All 图标间距 10，两按钮间隔 16。`Page=Review`：第 1 题浅红（staging 专用色，没有对应变量，写死），当前题 `violet/600` + 图层不透明度 80%，去掉 Next，View All 保持胶囊形，顶部 1px `base/border` 外描边 |
+| 19 张画板 | 底栏从库组件 `Question navigation` 换成 `Staging / Bottom Bar`：12 张作答页（含 Assignment Paused）用 Exam，7 张成绩页用 Review |
+| 19 张画板的题卡按钮 | Prev / Previous / Next 改为按内容自适应宽度，图标间距 10；Mark for Review 图标间距 10；成绩页两按钮间隔 4 |
+| 7 张成绩页 | Content 顶部内边距 40 → 32，鼠标示意跟着上移 8px |
+| Assignment Paused | 弹窗宽 600，内边距 25（staging 的 1px 边框在 24px 内边距之外，Figma 内描边要多 1px 才等价），正文 16/24，按钮换成 `Size=sm`（高 36）并把左右内边距改回 16（宽 159），放在 (420, 357) 居中；遮罩改成 50% 黑（DS 里没有 50% 的变量，最接近的是 48%，按 staging 写死），背景模糊 4 → 16；鼠标示意跟到按钮上 |
+
+**核对结果**（和 ticket 差异超过 40 的像素数）
+
+| 画板 | 之前 | 现在 | 剩下的差异 |
+| --- | --- | --- | --- |
+| 作答页 1–11 | 4,247–8,416 | 2,837–7,021 | 计时器的时间不同（我们 00:38:25，ticket 每张不一样）；鼠标示意；文字渲染；下面「没改的」几项 |
+| 老师暂停 12 | 93,125 | 4,761 | 背景是另一个状态的页面，模糊后有色块差异；顶栏、底栏已经是 0 |
+| 成绩页 13–18 | 20,309–29,960 | 1,063–1,250 | 鼠标示意和文字渲染（字形边界相差都不超过 1px） |
+
+**没改的，以及原因**
+
+1. **Try again 按钮是白底，ticket 第 4、5、7 张是灰底。** 第 1、6、8–11 张里的灰底按钮，和我们画板上加了鼠标示意的 Hover 状态逐像素重合，说明 PM 是用我们之前带悬停效果的画板做的图；第 4、5、7 张的 Try again 是 PM 照着悬停样式补画的。staging 里题卡内的按钮（Mark for Review、Prev、Next）默认都是白底，所以 Try again 保持 DS 的 Outline 默认样式。
+2. **已录状态播放器比 ticket 低 8px**（「Your teacher can listen…」到播放器 18px、播放器到 Try again 16px；ticket 是 10 和 24）。这部分也是 PM 补画的新内容，我们按 16px 节奏排，不改。
+3. **播放中进度**：ticket 是 0:03、约 38%，我们是 0:04、50%，只是示意。
+4. **说明文字换行差一两个词**：ticket 里 PM 改过的文字渲染得更窄，字号行高没问题（上一轮已核对）。
+5. **Next 宽 90，ticket 89**：浏览器和 Figma 对「Next」文字宽度取整不同，和 Prev 保持同一套间距。
+6. **计时器的时间**：不改成 ticket 的值，各画板统一 00:38:25。
+
+**另外注意到的**：检查过程中 Student 区域高度从 5749 变成 6289，Student Components 从 y=200 移到 y=2274。这次的脚本没有改过这两个区域，应该是有人同时在调整文件。
