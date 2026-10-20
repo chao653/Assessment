@@ -482,3 +482,27 @@ Question-Library 本地组件用的 `input/bg-disabled`、`input/text` 来自另
 6. **计时器的时间**：不改成 ticket 的值，各画板统一 00:38:25。
 
 **另外注意到的**：检查过程中 Student 区域高度从 5749 变成 6289，Student Components 从 y=200 移到 y=2274。这次的脚本没有改过这两个区域，应该是有人同时在调整文件。
+
+## 2026-10-20 · 成绩页换回库组件
+
+**任务来源**：用户发布了组件库（`Speak Aloud` 学生端成绩卡），要求处理后续。
+
+**确认发布内容**：从 Question-Library 取到的最新副本（`12232:33350`）里，Report、Report-Ungraded 的目标句块已是灰底文字块，Header 随宽度填充，和 10/20 改的一致。
+
+**改动**（Question-Library 学生端 7 张成绩页）
+
+| 画板 | 换成 | 覆盖 |
+| --- | --- | --- |
+| Submitted Ungraded - Answered | Report-Ungraded | 题号 2 |
+| Submitted Ungraded - Not Answered | Report-Ungraded | 题号 2；Audio Row 换 Student / Empty |
+| Graded - Needs Grading | Report-Ungraded | 题号 2 |
+| Graded - Full Points | Report | 题号 2 |
+| Graded - 0 Points | Report | 题号 2；`0 / 1 pt` |
+| Graded - Insufficient Response | Report | 题号 2；`0 / 1 pt`；标签切 Insufficient Response；打开 `Show No Speech Notice` |
+| Graded - Not Answered | Report | 题号 2；`0 / 1 pt`；标签切 Not Answered；Audio Row 换 Student / Empty |
+
+**核对**：替换前后逐像素对比。5 张完全一致；两张未作答的只在空录音图标上有 2 个像素差异（最大色差 25），是新旧两版图标的抗锯齿不同。
+
+**清理**：确认整个文件没有其他实例后，删除本地组件 `Speak Aloud / Student Report` 和 `Student Result Badge`。Student Components 里剩下的 `Staging / Exam Top Bar`、`Staging / Review Top Bar`、`Staging / Bottom Bar` 重新排到区域顶部，区域高度 1622 → 688。
+
+**发现：Question-Library 还没接受最新的库更新。** 除了这 7 张成绩页，页面上其余 `Speak Aloud` 实例都还指向上一版副本（`12192`）：学生端 12 张作答页、老师端 Preview 5 张、Teacher Editor 20 张、Teacher Grading 20 张。这次发布只改了学生端成绩卡，所以旧版实例画面不受影响。建议在 Question-Library 接受一次库更新，让版本统一；接受后需要再检查一遍作答页里切换过状态的录音区（10/19 出现过只更新默认状态、其余状态停在旧版的问题）。
