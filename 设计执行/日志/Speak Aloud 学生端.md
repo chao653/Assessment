@@ -525,7 +525,7 @@ Question-Library 本地组件用的 `input/bg-disabled`、`input/text` 来自另
 1. 附图里的圆弧开口朝下，用的是手绘示意。按钮库里的加载图标 `Icon / LoaderCircle` 开口朝右，实例里改不了旋转，按图标本身的方向放。
 2. 附图里的圆弧比 16px 图标槽大一圈。按钮把图标锁在 16px，拉不大。描边加到 2.5 是为了在这个尺寸下和附图一样粗；图标默认描边是 1，缩到 16px 后几乎看不见。
 
-老师端 Preview 的 Processing 没单独改。这个变体是学生端和老师端共用的，发布之后老师端会一起变成加载圆弧。
+老师端 Preview 的 Processing 没单独改。这个变体是学生端和老师端共用的，但老师端那张画板指向的是更早的副本，发布后不会自己变，见下一节。
 
 **可以回复 Xiaoyue 的草稿（未发送）**
 
@@ -533,3 +533,24 @@ Question-Library 本地组件用的 `input/bg-disabled`、`input/text` 来自另
 > 学生端：https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14869
 
 **还差一步**：组件库的 `Recording Area` 需要再发布一次。发布后 Question-Library 里这张画板的覆盖可以收掉，改成直接用新版变体。
+
+## 2026-10-20 · 处理中加载圆弧发布后的处理
+
+**任务来源**：用户发布了组件库（`Recording Area` 的 Processing 加载圆弧），要求继续。
+
+**确认发布内容**：按 key 从 Question-Library 取到的新版 Processing 变体里，圆按钮仍是 Disabled，图标是 `Icon / LoaderCircle`（白色 `icon/invert`，描边 2.5），状态行的 CircleNotch 隐藏，文案 `Processing...`，和上一节改的一致。
+
+**改动**（Question-Library 学生端 Processing 画板 [`11521:14869`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11521-14869)）
+
+1. 录音区从上一版副本 `12192:33491` 换到新版 `12258:33276`。
+2. 清掉上一节手加的 4 条覆盖：按钮的图标属性、加载图标的尺寸、描边颜色和粗细、状态行 CircleNotch 的隐藏。现在只剩录音区自身的 640×172（题卡宽度需要）。
+
+**核对**
+
+- 换版、清覆盖前后整张画板 1x 截图逐像素对比，差异为 0；按钮中心仍是 (183, 166, 239)。
+- Student 区域里只有这一张用到 Processing 态（重录没有单独的处理中画板）。
+- 其余 11 张作答页的录音区还指向 `12192`。把 Idle、Recording、Recorded、Mic Blocked、Save Failed 五个状态的新旧副本逐层比对（图层、尺寸、文字、填充、描边、组件属性），完全一致（Recording 只是属性顺序不同），所以不用跟着换。
+
+**老师端（没改）**：Teacher Preview 的 Processing 画板（`11788:45076`）还指向更早的副本 `11731`，按钮仍是 Discard。发布后不会自己更新，需要 Asher 把录音区切到最新版，或者在 Question-Library 接受一次库更新。
+
+**可以回复 Xiaoyue 的草稿（未发送）**：沿用上一节的草稿即可，画面和当时一致，组件库也已发布。
