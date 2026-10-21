@@ -554,3 +554,41 @@ Question-Library 本地组件用的 `input/bg-disabled`、`input/text` 来自另
 **老师端（没改）**：Teacher Preview 的 Processing 画板（`11788:45076`）还指向更早的副本 `11731`，按钮仍是 Discard。发布后不会自己更新，需要 Asher 把录音区切到最新版，或者在 Question-Library 接受一次库更新。
 
 **可以回复 Xiaoyue 的草稿（未发送）**：沿用上一节的草稿即可，画面和当时一致，组件库也已发布。
+
+## 2026-10-21 · 学生端统一到最新发布版本
+
+**任务来源**：用户说「我发布好了 recording area，你去做后续处理」。
+
+**确认发布内容**：按 key 拿到的 `Recording Area` 最新版仍是 `12258`，和组件库里的源组件逐层一致（Processing 里是 `Icon / LoaderCircle`，状态行的 CircleNotch 隐藏）。组件库里 `Recording Area`、`Speak Aloud` 的发布状态都是最新（CURRENT）。这就是 10/20 处理过的那次发布，没有新的画面改动。APACPO-329、APACUIX-445 也没有新评论。
+
+**改动**（Question-Library，只动 Student 区域）
+
+| 内容 | 从 | 到 | 数量 |
+| --- | --- | --- | --- |
+| `Speak Aloud`（Preview、Report、Report-Ungraded） | `12232` | `12267`（本次导入编号 `12269`） | 19 |
+| `Speak Aloud / Recording Area` | `12192` | `12258` | 11（加上 10/20 换好的 Processing，学生端 12 个全部是 `12258`） |
+
+换之前，学生端用到的每个变体都把新旧两版逐层比过（图层、尺寸、文字、填充、描边、组件属性），完全一致。所以这次只是统一版本，目标是画面不变。
+
+**核对**：19 张画板换之前、换之后各截一张 1x 图，逐像素对比。
+
+| 画板 | 结果 |
+| --- | --- |
+| Processing、Recorded、Recorded - Playing、Save Failed、Re-recorded、Re-record - Save Failed、Assignment Paused、7 张成绩页 | 完全一致 |
+| Recording | 换完后停止方块变成深色 (23, 23, 23)，还多了一圈 1.33px 的 (250, 250, 250) 描边（Hover 按钮自带的，库里早就去掉了）。按钮切成 Hover 后，库里给方块设的白色没有跟过来。已把方块重新绑到 `icon/invert`、去掉描边，复查完全一致 |
+| Not Recorded、Try Again - Ready to Re-record、Microphone Blocked、Re-record - Microphone Blocked | Tap to Speak 的文字从 (24, 24, 27) 变成 (10, 10, 10)，最大色差 17，其他地方一致。**保留新的颜色**，原因见下 |
+
+Tap to Speak 文字颜色为什么不改回去：组件库的 `Recording Area` 把这个按钮的文字设成 `text/primary` (10, 10, 10)。之前 4 张悬停画板显示的 (24, 24, 27) 是 Hover 按钮自带的 `base/accent-foreground`，说明库里的设置当时没生效。Save Failed 和重录保存失败的 Record again 一直是 (10, 10, 10)。现在 5 个悬停的描边按钮颜色一致，悬停和不悬停时文字颜色也一样（悬停只改底色）。如果要和之前的截图逐像素一致，在这 4 个按钮的文字上加回 `base/accent-foreground` 覆盖即可。
+
+**播放器**：Recorded、Re-recorded、Assignment Paused 的播放器（Audio Row · Student / Default）还是 `12192`。Audio Row 这次没有新发布，新版录音区里嵌的也是这份，所以它就是最新版，不用换。
+
+**更正：`Speak Aloud / Audio Row` 和 `Questions Answer State` 并没有单独发布新版本。** 组件库里这两个组件集的发布状态都是「有未发布的改动」（CHANGED）。按 key 去拿已发布的版本：
+
+- Audio Row 已发布的只有 7 个变体，没有 `Role=Student, State=Playing`。
+- Questions Answer State 的 Insufficient Response 查不到。Not Answered、Rubric Graded 拿到的也是没有图标的旧样子。
+
+Question-Library 里能看到这些新变体（`12192` 的 Audio Row 带 Playing；`12097` 的 Questions Answer State 有 5 个变体、带图标），是因为它们嵌在 `Speak Aloud`、`Recording Area` 里，作为依赖被一起带过来了。10/20 我判断「已经发布了」，依据就是 `12097` 这份副本，所以那个结论不对。学生端画面现在不受影响。但「已录 - 播放中」那张画板直接用了 Playing 变体：组件面板里搜不到这个变体，以后库里改了它也收不到更新。其他题型的成绩页也用不到新的 Insufficient Response 和带图标的状态标签。
+
+**需要用户操作**：在组件库发布 `Speak Aloud / Audio Row` 和 `Questions Answer State`。发布后我再按 key 确认这两个变体能拿到，并把「已录 - 播放中」的播放器换到正式发布的副本。
+
+老师端没有改动。
