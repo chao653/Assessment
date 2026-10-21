@@ -605,3 +605,53 @@ Question-Library 里能看到这些新变体（`12192` 的 Audio Row 带 Playing
 查了 `Questions Answer State` 本身，没有挡住发布的问题：它在 `Assessment - WIP` 页的 `Question Components` 区里，名字不以 `.` 或 `_` 开头，5 个变体的属性没有冲突，里面的图标都来自其他已发布的库。最可能是发布时没有勾选它。
 
 **需要用户操作**：在组件库的发布面板里找到 `Questions Answer State`（[`16131:27095`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=16131-27095)），勾选后再发布一次。这个组件是所有题型成绩页共用的，发布后其他题型的成绩页也会拿到新样式（Rubric Graded 灰色 + 图标、Not Answered 加图标、新增 Insufficient Response），这是 APACUIX-445 第 4 条要的。学生端 Speak Aloud 成绩页现在用的是 `Speak Aloud` 带进来的新版，画面已经是对的，发布后不会变。
+
+## 2026-10-21 · 再次对照 APACPO-329 检查学生端
+
+**任务来源**：用户要求再对照 [APACPO-329](https://linear.app/kira-learning/issue/APACPO-329/pm-design-review-2-student-view-speak-aloud) 检查一遍 [Student](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11501-11438)。
+
+**ticket 有什么变化**：描述在 10/21 09:09 更新过，「3. 处理中」下面加了一张「左为现在、右为建议」的图，和 10/20 Xiaoyue 评论里的图逐像素相同，已经按它改过。其余 18 张参考图的地址和 10/20 下载时完全一样，内容没变。评论区只多了用户 06:55 回复 Pamper 的「设计稿已更新」。
+
+**方法**：20 张学生端画板重新截 1x 图，和 ticket 参考图、10/20 收尾时的截图、今天 02:30 统一版本后的截图分别做逐像素对比，找出哪些是新变化。
+
+**从 10/20 收尾到现在的变化**
+
+| 画板 | 变化 | 来源 |
+| --- | --- | --- |
+| Processing | 圆按钮里换成加载圆弧，去掉文案旁的小加载 | 10/20 PM 评论，符合 ticket 新图 |
+| Not Recorded、Try Again | Tap to Speak 文字 (24, 24, 27) 变为 (10, 10, 10) | 今天 02:30 统一版本（见上一节） |
+| Recorded、Recorded - Playing、Re-recorded、Microphone Blocked、Save Failed、两张重录失败、Assignment Paused | 录音区变矮：Recorded 矮 14px，Mic Blocked 矮 18px，Save Failed 矮 34px | 今天 02:43 之后组件库的 `Recording Area` 被改过并重新发布（副本 `12314`），Question-Library 也接受了更新 |
+| 7 张成绩页 | 没有变化 | 和 10/20 收尾时逐像素一致（14、18 两张只有 10/20 换库组件时空录音图标 2 个像素的抗锯齿差异） |
+
+**组件库 `Recording Area` 今天的改动，和 ticket 不一致（没改，需要用户决定）**
+
+Recorded、Mic Blocked、Save Failed 三个状态，把状态行和说明文字合进了新的 `Status Message` 组：
+
+- 组内间距 6px，原来是 16px。
+- 说明文字从 14/20 改成了 12/16。
+
+和 ticket 第 4、5、7–11 张的差别：
+
+- ticket 里这三个状态的说明文字都是 14px。
+- Save Failed 在 ticket 里是两行，现在一行；Mic Blocked 的换行位置也不同。
+- Recorded 的播放器比 ticket 高 6px，题卡比 ticket 矮 14px。
+
+另外，组件内部现在不统一：Idle（含 Try Again 后的 Your last recording is still saved…）、Recording、Processing、Idle / Disabled、Recorded / Disabled 的说明文字仍是 14/20、间距 16。这次改动是有意做的、也已经发布，所以没有改回去。两个方向选一个：把这三个状态改回 14/20 + 16，和 ticket、其他状态一致；或者把 12/16 + 6 推到所有状态。
+
+**这次修的**
+
+1. **鼠标示意跟着按钮挪回原位。** 录音区变矮后按钮上移，鼠标示意是画板上的独立图层，没有跟着动。「重录保存失败」的鼠标已经悬在按钮下方的空白处，另外 6 张也往下偏了。按各自按钮上移的距离把鼠标挪回去：Recorded、Recorded - Playing、Re-recorded 上移 14px，两张 Mic Blocked 上移 18px，Re-record - Save Failed 上移 34px。Save Failed 那张的鼠标之前已经有人挪过 18px，所以直接放到 y=420，和重录那张一致。挪完后，每个鼠标和按钮的相对位置都和改版前逐像素一致。
+2. **Assignment Paused 背景里的录音区改成 `State=Recorded, Interaction=Disabled`。** ticket 第 2 条写「交卷后、暂停或锁定时不出现 Try again」，但这张画板弹窗下方还能看到 Try again 的模糊色块。Disabled 是组件库专门给暂停、锁定、交卷后用的状态，没有 Try again 和播放器。ticket 第 12 张的背景是 staging 里另一道普通题，看不出录音区状态，所以按文字规则改。改完后背景题卡下沿正好在弹窗下方，Prev、Next 那一行从弹窗右侧露出来，布局和 ticket 第 12 张更接近。弹窗本身没变。
+
+**逐条核对 ticket 的文字要求**
+
+| ticket | 结果 |
+| --- | --- |
+| 问题 1：外壳用 staging | 顶栏、底栏、题卡按钮和 10/20 收尾时一致 |
+| 问题 2：已录保留 Try again；点了回到 Tap to Speak，提示 `Your last recording is still saved. Record again to replace it.`；失败提示见第 10、11 张；暂停时不出现 Try again | 文案逐字一致；暂停画板已改成 Disabled（见上） |
+| 问题 3：暂停用整页 Assignment Paused | 一致 |
+| 问题 4：播放器只在已录状态出现，点 Try again 后不显示 | 一致 |
+| 问题 5：停止图标，提示 `Tap stop when you finish. Recording stops on its own once every word is heard, or after 100 seconds.` | 一致 |
+| 3. 处理中（新图） | 圆按钮置灰不可点，里面是加载圆弧，文案旁没有小加载，文案 `Processing...` |
+
+**组件库发布状态**：`Recording Area`、`Audio Row` 是最新。`Questions Answer State` 仍未发布。`Speak Aloud` 显示有未发布的改动：8 个变体和已发布版本逐层一致，应该是里面嵌的 `Recording Area` 重新发布后被标成了已改动，学生端画面不受影响。
