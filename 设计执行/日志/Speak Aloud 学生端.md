@@ -408,7 +408,7 @@ ticket 第 2 张的按钮颜色是 (130, 100, 231)，是 Primary 加上 Hover �
 
 **任务来源**：用户说「继续」。接着处理上一轮留下的问题：成绩页换不回库组件，因为库里 `Speak Aloud` 的学生端 Report、Report-Ungraded 和 ticket 不一致。
 
-**更正上一轮的结论：`Questions Answer State` 其实已经发布了。** Question-Library 里这个组件有两份副本：`12097:44487` 是新版（5 个变体，带图标，有 Insufficient Response），随 `Speak Aloud` 嵌套进来；`11157:54318` 是旧版（4 个变体）。按 key 导入时返回的是旧副本，所以上一轮误判为未发布。两份副本都只在其他库组件内部用到，画布上没有直接实例。
+**更正上一轮的结论：`Questions Answer State` 其实已经发布了。**（**10/21 再更正：这个判断也不对**，新版只是作为 `Speak Aloud` 的依赖被带进来，组件集本身没有发布，见「2026-10-21 · 学生端统一到最新发布版本」。） Question-Library 里这个组件有两份副本：`12097:44487` 是新版（5 个变体，带图标，有 Insufficient Response），随 `Speak Aloud` 嵌套进来；`11157:54318` 是旧版（4 个变体）。按 key 导入时返回的是旧副本，所以上一轮误判为未发布。两份副本都只在其他库组件内部用到，画布上没有直接实例。
 
 **改动**（组件库 `Speak Aloud`，[`17242:500`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17242-500)，只动学生端两个变体）
 
