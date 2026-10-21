@@ -592,3 +592,16 @@ Question-Library 里能看到这些新变体（`12192` 的 Audio Row 带 Playing
 **需要用户操作**：在组件库发布 `Speak Aloud / Audio Row` 和 `Questions Answer State`。发布后我再按 key 确认这两个变体能拿到，并把「已录 - 播放中」的播放器换到正式发布的副本。
 
 老师端没有改动。
+
+## 2026-10-21 · 发布 Audio Row、Questions Answer State 后的检查
+
+**任务来源**：用户说「我都发布了，你再看看」。
+
+| 组件 | 组件库里的发布状态 | Question-Library 按 key 拿到的 | 结论 |
+| --- | --- | --- | --- |
+| `Speak Aloud / Audio Row` | 最新（CURRENT） | 8 个变体，包括 `Role=Student, State=Playing`；Playing、Student / Default、Student / Empty 都和组件库逐层一致 | 已发布。「已录 - 播放中」的播放器拿到的就是 `12192:33347`，内容和发布版本完全一样，不用换 |
+| `Questions Answer State` | 仍是「有未发布的改动」（CHANGED），隔一会儿再查还是一样 | Insufficient Response 还是查不到 | **这次没发出去** |
+
+查了 `Questions Answer State` 本身，没有挡住发布的问题：它在 `Assessment - WIP` 页的 `Question Components` 区里，名字不以 `.` 或 `_` 开头，5 个变体的属性没有冲突，里面的图标都来自其他已发布的库。最可能是发布时没有勾选它。
+
+**需要用户操作**：在组件库的发布面板里找到 `Questions Answer State`（[`16131:27095`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=16131-27095)），勾选后再发布一次。这个组件是所有题型成绩页共用的，发布后其他题型的成绩页也会拿到新样式（Rubric Graded 灰色 + 图标、Not Answered 加图标、新增 Insufficient Response），这是 APACUIX-445 第 4 条要的。学生端 Speak Aloud 成绩页现在用的是 `Speak Aloud` 带进来的新版，画面已经是对的，发布后不会变。
