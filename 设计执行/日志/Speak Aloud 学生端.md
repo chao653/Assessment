@@ -682,3 +682,21 @@ Recorded、Mic Blocked、Save Failed 三个状态，把状态行和说明文字�
 
 > @pamper 已改：学生成绩页「已出分、未作答」的分数改成 `- / 1 pt`。其余成绩页核对过：没出分的本来就是 `-`，0 分和 Insufficient Response 两张是已作答，保留 `0 / 1 pt`。
 > https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556
+
+## 2026-10-22 · 录音区说明文字恢复 14px
+
+**任务来源**：用户决定「说明文字保持 14px」，也就是 10/21 列的第一个方向：Recorded、Mic Blocked、Save Failed 三个状态改回 14/20 + 间距 16，和 ticket、组件里其他状态一致。
+
+**改动**（组件库 `Speak Aloud / Recording Area`，[`17217:336704`](https://www.figma.com/design/JxbsqAsQTlEL4ZHvL7pekx/Kira-Custom-Components--TO-BE-ARCHIVED-?node-id=17217-336704)）
+
+| 状态 | 说明文字 | `Status Message` 组内间距 | 高度 |
+| --- | --- | --- | --- |
+| Recorded | `text/xxs/regular`（12/16）→ `text/sm/regular`（14/20） | 6 → 16 | 194 → 208 |
+| Mic Blocked | 同上 | 6 → 16 | 118 → 136 |
+| Save Failed | 同上 | 6 → 16 | 102 → 136 |
+
+颜色本来就是 `text/secondary`，没动。`Status Message` 这层分组保留，只是间距改回 16，所以几何和改版前完全一样（三个高度都回到了改版前的 208、136、136）。截图核对：Mic Blocked 在「You」后换行、Save Failed 在「record」后换行，和 ticket 第 8、9 张一致。
+
+**没改的：状态行里图标和文字的间距。** 改版时 Mic Blocked、Save Failed 的 `Error Status` 图标间距也从 16 改成了 6。ticket 第 8–11 张是 16（实测图标和文字之间的空白，ticket 18–20px，现在 8–10px），所以现在图标比 ticket 靠近文字 10px。这次用户只定了说明文字，这一处没动，列给用户决定。
+
+**还差一步**：组件库需要再发布一次 `Recording Area`。发布后，Question-Library 这 7 张画板的录音区会恢复到改版前的高度：Recorded、Recorded - Playing、Re-recorded、Microphone Blocked、Save Failed、两张重录失败（Assignment Paused 用的是 Recorded / Disabled，不受影响）。10/21 跟着改版上移的鼠标示意，要再挪回原位：已录三张下移 14px，两张 Mic Blocked 下移 18px，两张 Save Failed 下移 34px。挪完逐像素和 10/21 02:30 的截图对比。
