@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1160" viewBox="0 0 640 1160">
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#52525b"/></marker>
+<style>
+.b{fill:#fff;stroke:#3c2686;stroke-width:2}
+.p{fill:#ecfdf3;stroke:#15803d;stroke-width:2}
+.d{fill:#fff7ed;stroke:#c2410c;stroke-width:2}
+.n{font:600 17px Inter,Arial,sans-serif;fill:#18181b}
+.s{font:13px Inter,Arial,sans-serif;fill:#52525b}
+.l{stroke:#52525b;stroke-width:1.6;fill:none;marker-end:url(#a)}
+.h{font:700 24px Inter,Arial,sans-serif;fill:#18181b}
+.c{font:14px Inter,Arial,sans-serif;fill:#52525b}
+</style></defs>
+<rect width="640" height="1160" fill="#fff"/>
+<text x="40" y="52" class="h">Figure 4. Meadow food chain</text>
+<text x="40" y="80" class="c">Arrows point from the organism that is eaten</text>
+<text x="40" y="100" class="c">to the organism that eats it.</text>
+<rect class="b" x="170" y="150" width="300" height="72" rx="10"/><text x="320" y="181" class="n" text-anchor="middle">Red-tailed hawk</text><text x="320" y="204" class="s" text-anchor="middle">Tertiary consumer · 0.1</text>
+<rect class="b" x="170" y="340" width="300" height="72" rx="10"/><text x="320" y="371" class="n" text-anchor="middle">Garter snake</text><text x="320" y="394" class="s" text-anchor="middle">Secondary consumer · 4</text>
+<rect class="b" x="170" y="530" width="300" height="72" rx="10"/><text x="320" y="561" class="n" text-anchor="middle">Leopard frog</text><text x="320" y="584" class="s" text-anchor="middle">Secondary consumer · 22</text>
+<rect class="b" x="170" y="720" width="300" height="72" rx="10"/><text x="320" y="751" class="n" text-anchor="middle">Grasshopper</text><text x="320" y="774" class="s" text-anchor="middle">Primary consumer · 9,000</text>
+<rect class="p" x="170" y="910" width="300" height="72" rx="10"/><text x="320" y="941" class="n" text-anchor="middle">Meadow grass</text><text x="320" y="964" class="s" text-anchor="middle">Producer</text>
+<path class="l" d="M320 340L320 224"/>
+<path class="l" d="M320 530L320 414"/>
+<path class="l" d="M320 720L320 604"/>
+<path class="l" d="M320 910L320 794"/>
+<text x="40" y="1120" class="c">Numbers show average population per hectare in June.</text>
+</svg>

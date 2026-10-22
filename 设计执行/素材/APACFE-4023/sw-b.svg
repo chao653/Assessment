@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="72" viewBox="0 0 160 72">
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#52525b"/></marker>
+<style>
+.b{fill:#fff;stroke:#3c2686;stroke-width:2}
+.p{fill:#ecfdf3;stroke:#15803d;stroke-width:2}
+.d{fill:#fff7ed;stroke:#c2410c;stroke-width:2}
+.n{font:600 17px Inter,Arial,sans-serif;fill:#18181b}
+.s{font:13px Inter,Arial,sans-serif;fill:#52525b}
+.l{stroke:#52525b;stroke-width:1.6;fill:none;marker-end:url(#a)}
+.h{font:700 24px Inter,Arial,sans-serif;fill:#18181b}
+.c{font:14px Inter,Arial,sans-serif;fill:#52525b}
+</style></defs>
+<rect width="160" height="72" fill="#fff"/>
+<rect class="b" x="20" y="14" width="120" height="44" rx="10"/>
+</svg>
