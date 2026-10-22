@@ -63,3 +63,28 @@ Figma 文件：[Assessment Feedback - Iteration](https://www.figma.com/design/g2
 ### 参考截图
 
 PR 里附了 Section 总览和几个关键画面的截图。
+
+## 2026-10-22 · 补鼠标指针示意；Designer 确认
+
+**任务来源**：用户确认「只要我让你做的设计稿，designer 都是我」。同时按用户既有偏好（Notion memory「Figma 设计稿：鼠标交互示意」）补齐鼠标指针。
+
+**结果状态**：已完成。
+
+- 说明卡（13735:864）Designer 保持 Asher，不再列为待确认。这条规则已记入 Notion memory「设计稿说明卡：Designer 字段」。
+- 删掉原来 4 个 `_Annotation / Cursor …` 图层，改为 11 个 `Mouse Cursor (…)`。全部是 ShadCN-Default `Cursor` 组件，放在各画板最顶层（绝对定位），指尖对准交互元素：
+
+| 画面 | node_id | 指针 | 指向 |
+| --- | --- | --- | --- |
+| Student Answer Page / Desktop - Image at Content Width | 13738:3813 | pointer | View full image 标签 |
+| Full Image View / Desktop - Fitted | 13740:1905 | pointer | Zoom in |
+| Full Image View / Desktop - Fitted - Tall Image | 13741:1967 | pointer | Close |
+| Full Image View / Desktop - Zoomed 200% and Dragged | 13741:1977 | grabbing | 拖动中的图片 |
+| Full Image View / Desktop - Zoomed 400% (Max) | 13741:1987 | pointer | Reset |
+| Student Answer Page / Desktop - Answer Choice Images | 13739:1316 | pointer | 选项 C 的图片（Hover 态） |
+| Full Image View / Desktop - Answer Choice Image | 13741:1997 | pointer | Close |
+| Student Answer Page / Desktop - Small Answer Choice Images | 13739:1330 | pointer | 选项 B 的图片（已改为 Hover 态） |
+| Teacher Preview / Desktop - Full Image View | 13741:2007 | pointer | Close |
+| Student Results / Desktop - Image at Content Width | 13742:2304 | pointer | View full image 标签 |
+| Assessment Editor / Desktop - Image at Content Width | 13745:3125 | nwse-resize | 题图右下角的调整手柄 |
+
+- 不加的：Tall Image Height Limit（13739:1302，只展示尺寸结果）、两张平板画面（13742:2283、13742:2293，触屏）。
