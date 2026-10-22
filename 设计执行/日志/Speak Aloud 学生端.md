@@ -700,3 +700,37 @@ Recorded、Mic Blocked、Save Failed 三个状态，把状态行和说明文字�
 **没改的：状态行里图标和文字的间距。** 改版时 Mic Blocked、Save Failed 的 `Error Status` 图标间距也从 16 改成了 6。ticket 第 8–11 张是 16（实测图标和文字之间的空白，ticket 18–20px，现在 8–10px），所以现在图标比 ticket 靠近文字 10px。这次用户只定了说明文字，这一处没动，列给用户决定。
 
 **还差一步**：组件库需要再发布一次 `Recording Area`。发布后，Question-Library 这 7 张画板的录音区会恢复到改版前的高度：Recorded、Recorded - Playing、Re-recorded、Microphone Blocked、Save Failed、两张重录失败（Assignment Paused 用的是 Recorded / Disabled，不受影响）。10/21 跟着改版上移的鼠标示意，要再挪回原位：已录三张下移 14px，两张 Mic Blocked 下移 18px，两张 Save Failed 下移 34px。挪完逐像素和 10/21 02:30 的截图对比。
+
+## 2026-10-22 · 说明文字 14px 发布后的处理
+
+**任务来源**：用户发布了组件库，要求处理后续。
+
+**发布状态**：`Recording Area`、`Questions Answer State`、`Audio Row` 都是最新（CURRENT）。
+
+- `Questions Answer State` 这次终于发出去了：Insufficient Response 能按 key 拿到，发布版本的 5 个变体和组件库逐层一致。
+- `Speak Aloud` 仍显示有未发布的改动，原因同 10/21：它嵌的 `Recording Area` 重新发布过，变体内容和发布版本一致。
+
+**改动**（Question-Library，只动 Student 区域）
+
+1. **录音区换到新版 `12383`。** Question-Library 没有接受更新，学生端 12 个录音区里 10 个还在改版那一版 `12314`（说明文字 12px），2 个在 `12258`。全部换到 `12383`。Recorded 高度 194 → 208，Mic Blocked、Save Failed 118 / 102 → 136，回到改版前。换完复查：录音中的停止方块仍是白色、没有描边、按钮仍是 Hover。
+2. **鼠标示意挪回原位**：已录三张 456，两张 Mic Blocked 和两张 Save Failed 454，都是改版前的位置。
+
+**核对**：12 张作答页 1x 截图逐像素对比。
+
+| 画板 | 对比对象 | 结果 |
+| --- | --- | --- |
+| Not Recorded、Recording、Processing、Recorded、Recorded - Playing、Try Again、Re-recorded | 10/21 02:30（改版前） | 完全一致 |
+| Assignment Paused | 10/21 改成 Disabled 后 | 完全一致 |
+| Microphone Blocked、Save Failed、两张重录失败 | 10/21 02:30 | 只有状态行（y 355–370）不同：图标和文字的间距现在是 6，改版前是 16 |
+
+和 ticket 的差异像素（超过 40 的）明显下降：
+
+| 画板 | 改版后 | 现在 |
+| --- | --- | --- |
+| Recorded | 8,562 | 5,367 |
+| Mic Blocked | 12,043 | 4,585 |
+| Save Failed | 9,866 | 4,790 |
+
+两张重录失败是 8,751、8,399。改版前就是 7,734、7,153，原因是 10/19 记过的说明文字换行差一两个词，多出来的约 1,000 来自图标间距，和首次失败那两张一样。
+
+**还没定的**：状态行图标间距（6 还是改回 ticket 的 16），见上一节。
