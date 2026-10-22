@@ -655,3 +655,30 @@ Recorded、Mic Blocked、Save Failed 三个状态，把状态行和说明文字�
 | 3. 处理中（新图） | 圆按钮置灰不可点，里面是加载圆弧，文案旁没有小加载，文案 `Processing...` |
 
 **组件库发布状态**：`Recording Area`、`Audio Row` 是最新。`Questions Answer State` 仍未发布。`Speak Aloud` 显示有未发布的改动：8 个变体和已发布版本逐层一致，应该是里面嵌的 `Recording Area` 重新发布后被标成了已改动，学生端画面不受影响。
+
+## 2026-10-22 · APACPO-330：未作答的分数显示「-」
+
+**任务来源**：用户要求处理 [APACPO-330](https://linear.app/kira-learning/issue/APACPO-330/pm-design-review-2-speak-aloud-设计稿走查)。ticket 描述只有一句「Speak aloud 设计稿走查 issue 汇总」，目前只有 Pamper 的一条评论（10/22 10:32，北京时间）：
+
+> 学生成绩页 Speak Aloud「未作答」这张设计稿（[`11523-17558`](https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17558)），现在画的是 `0 / 1 pt`，需要改成 `- / 1 pt`。按 APACPO-329 走查定下的规则，题目没作答时题卡上分数显示「-」，不显示 0（算总分时仍按 0 分计）。所有题型都是这样，staging 上 Short Response 没作答也显示 `- / 4 pts`。
+
+`11523:17558` 是 Graded - Not Answered 画板（`11523:17556`）的 Content。
+
+**改动**（Question-Library，只动这一张）
+
+| 画板 | 改前 | 改后 |
+| --- | --- | --- |
+| Graded - Not Answered | `0 / 1 pt` | `- / 1 pt` |
+
+分数块的样式不变（已出分的紫底 + 深紫字，Inter Medium 14），只改文字覆盖。分数块宽 62 → 60，右边缘不动，左边的 Not Answered 标签跟着右移 2px，间距不变。改前改后整张画板 1x 截图对比，只有这两处像素变化。
+
+**其余画板逐张核对过分数**
+
+- 作答中 12 张、还没出分的 3 张（Submitted Ungraded 两张、Graded - Needs Grading）本来就是 `- / 1 pt`。
+- Graded - Full Points 是 `1 / 1 pt`。
+- Graded - 0 Points 和 Graded - Insufficient Response 保留 `0 / 1 pt`：前者答了但得 0 分，后者录了音但没听到声音，都算已作答，按规则显示 0。
+
+**可以回复 Pamper 的草稿（未发送）**
+
+> @pamper 已改：学生成绩页「已出分、未作答」的分数改成 `- / 1 pt`。其余成绩页核对过：没出分的本来就是 `-`，0 分和 Insufficient Response 两张是已作答，保留 `0 / 1 pt`。
+> https://www.figma.com/design/WLKOeNoCrS33jWIpbjcE9h/Question-Library?node-id=11523-17556
