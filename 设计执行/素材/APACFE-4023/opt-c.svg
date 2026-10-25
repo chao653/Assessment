@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="180" viewBox="0 0 720 180">
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#52525b"/></marker>
+<style>
+.b{fill:#fff;stroke:#3c2686;stroke-width:2}
+.p{fill:#ecfdf3;stroke:#15803d;stroke-width:2}
+.d{fill:#fff7ed;stroke:#c2410c;stroke-width:2}
+.n{font:600 17px Inter,Arial,sans-serif;fill:#18181b}
+.s{font:13px Inter,Arial,sans-serif;fill:#52525b}
+.l{stroke:#52525b;stroke-width:1.6;fill:none;marker-end:url(#a)}
+.h{font:700 24px Inter,Arial,sans-serif;fill:#18181b}
+.c{font:14px Inter,Arial,sans-serif;fill:#52525b}
+</style></defs>
+<rect width="720" height="180" fill="#fff"/>
+<rect class="b" x="30" y="58" width="180" height="64" rx="10"/><text x="120" y="96" class="n" text-anchor="middle">Grasshopper</text>
+<rect class="p" x="270" y="58" width="180" height="64" rx="10"/><text x="360" y="96" class="n" text-anchor="middle">Meadow grass</text>
+<rect class="b" x="510" y="58" width="180" height="64" rx="10"/><text x="600" y="96" class="n" text-anchor="middle">Leopard frog</text>
+<path class="l" d="M214 90L264 90"/>
+<path class="l" d="M454 90L504 90"/>
+</svg>
